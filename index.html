@@ -213,37 +213,41 @@
             grid-row-end: 6;
             grid-column-start: 1;
             grid-column-end: 3;
+        }
+
+        section.plates > a {
+            color: #fff8e6;
             background-color: black;
-            color: white;
             font-family: "Onest", sans-serif;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr;
+            height: 100%
         }
 
-        section.plates>div {
+        section.plates > a > div {
             height: 100%;
             width: 50%;
         }
 
-        section.plates>div.info {
+        section.plates > a > div.info {
             display: flex;
             flex-direction: column;
             justify-content: center;
             margin-left: 40px;
         }
 
-        section.plates>div.info>img {
+        section.plates > a > div.info>img {
             width: 5em;
             height: auto;
         }
 
-        section.plates>div.info>h1 {
+        section.plates > a > div.info>h1 {
             font-size: xxx-large;
             margin-top: 0.2em;
         }
 
-        section.plates>div.blurb {
+        section.plates > a > div.blurb {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -251,7 +255,7 @@
             margin-right: 40px;
         }
 
-        section.info {
+        section.info, section.info > a {
             background-color: #e3fde3;
             font-family: "Orbit", "Onest", monospace;
             display: flex;
@@ -259,7 +263,13 @@
             justify-content: space-between;
         }
 
-        section.info>div.blurb {
+        section.info > a {
+            height: 100%;
+            width: 100%;
+            color: black;
+        }
+
+        section.info > a > div.blurb {
             margin-left: 1em;
             margin-top: 1em;
             max-width: 80%;
@@ -268,7 +278,7 @@
             align-self: start;
         }
 
-        section.info>div.legal {
+        section.info > a >div.legal {
             margin-bottom: 5px;
             margin-left: 5px;
             width: 90%;
@@ -278,19 +288,25 @@
 
         section.vuno {
             font-family: "JetBrains Mono", "Onest", monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             background: white;
         }
 
-        section.vuno>div.text {
+        section.vuno > a {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            color: black;
+        }
+
+        section.vuno > a > div.text {
             font-size: xxx-large;
             margin: 30px;
             align-self: start;
         }
 
-        section.vuno>div.text p::after {
+        section.vuno > a > div.text p::after {
             content: '▮';
             animation: blink 1s step-start infinite;
         }
@@ -301,7 +317,7 @@
             }
         }
 
-        section.vuno>div.name {
+        section.vuno > a > div.name {
             height: 3em;
             align-self: start;
             border: solid 3px;
@@ -315,8 +331,8 @@
             overflow: hidden;
         }
 
-        section.vuno>div.name>p {
-            margin-left: 60px;
+        section.vuno > a > div.name > p {
+            margin-left: 15px;
             font-size: large;
         }
 
@@ -333,34 +349,42 @@
         .letter.o {
             color: #ff5705;
         }
+
+        a {text-decoration: none;}
     </style>
 </head>
 
 <body>
     <header>
-        <h1 class='logo' id='logo'></h1>
+        <a href="https://undivisible.dev/"><h1 class='logo' id='logo'></h1></a>
     </header>
     <section class='plates'>
-        <div class='info'><img src="fsq1d.png" alt="Logo">
-            <h1>Plates</h1>
-        </div>
-        <div class='blurb'><i>platform of the Internet as a technologically enabled singularity</i></div>
+        <a href="plates.html">
+            <div class='info'><img src="fsq1d.png" alt="Logo">
+                <h1>Plates</h1>
+            </div>
+            <div class='blurb'><i>platform of the Internet as a technologically enabled singularity</i></div>
+        </a>
     </section>
     <section class='info'>
-        <div class='blurb'>
-            <span><span class='o'>a</span>technology company</span> was started to create
-            <span class='letter' data-color="friendly">friendly,</span>
-            <span class='letter' data-color="fun">fun,</span>
-            <span class='letter' data-color="natural">natural tech</span> by
-            <span class='letter' data-color="reinventing">reinventing</span>
-            <span class='letter' data-color="best">the best possible wares</span> for
-            <span class='letter' data-color="people">people.</span>
-        </div>
-        <div class='legal'>96994565415, a subsidiary of undivisible industries</div>
+        <a href="https://undivisible.dev/">
+            <div class='blurb'>
+                <span><span class='o'>a</span>technology company</span> was started to create
+                <span class='letter' data-color="friendly">friendly,</span>
+                <span class='letter' data-color="fun">fun,</span>
+                <span class='letter' data-color="natural">natural tech</span> by
+                <span class='letter' data-color="reinventing">reinventing</span>
+                <span class='letter' data-color="best">the best possible wares</span> for
+                <span class='letter' data-color="people">people.</span>
+            </div>
+            <div class='legal'>96994565415, a subsidiary of undivisible industries</div>
+        </a>
     </section>
     <section class='vuno'>
-        <div class='text'><p>a text editor and more</p></div>
-        <div class='name'>vuno</div>
+        <a href='https://github.com/atechnology-company/vuno/'>
+            <div class='text'><p>a text editor and more</p></div>
+            <div class='name'><p>vuno</p></div>
+        </a>
     </section>
 
     <script>
