@@ -71,7 +71,7 @@
             // Update indicators
         function updateCarousel() {
             document.querySelectorAll('.indicator').forEach((indicator, index) => {
-                const offset = -currentIndex * 95;
+                const offset = -currentIndex * 98;
                 indicator.classList.toggle('active', index === currentIndex);
                 carousel.style.transform = `translateX(${offset}vw)`;
             });
