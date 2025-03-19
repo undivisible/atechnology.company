@@ -116,6 +116,35 @@
             }, 300);
         }, { passive: false });
 
+        // Touch handling for mobile devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // минимальное расстояние для свайпа
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Свайп влево
+                    currentIndex = Math.min(maxIndex, currentIndex + 1);
+                } else {
+                    // Свайп вправо
+                    currentIndex = Math.max(0, currentIndex - 1);
+                }
+                updateCarousel();
+            }
+        }
+
         // Title animation
         const textElement = document.getElementById('animated-text');
         const aLetter = document.getElementById('a-letter');
