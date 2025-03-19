@@ -1,0 +1,219 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base Layout */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+    background-color: black;
+}
+
+main {
+    height: 200vh;
+    overflow: hidden;
+}
+
+/* Typography */
+h1 {
+    font-size: 3em;
+    font-family: 'Onest', sans-serif;
+}
+
+/* Sections */
+.section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+.title-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2rem;
+    font-family: 'Onest', sans-serif;
+}
+
+/* Carousel */
+.carousel-container {
+    height: 95vh;
+    display: flex;
+    position: relative;
+    width: 95%;
+    margin: 2.5vh auto;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.carousel-item {
+    min-width: 95vw;
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: white;
+    scroll-snap-align: start;
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    transform-origin: center;
+}
+
+.carousel-item .content {
+    transition: opacity 0.3s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item.expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: 100vw;
+    z-index: 1000;
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+}
+
+.carousel-item.expanded .content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.carousel-item.closing {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Carousel Items */
+.carousel-item:nth-child(1) { background: #191919; }
+.carousel-item:nth-child(2) { background: #fff8e7; }
+.carousel-item:nth-child(3) { background: #fff; }
+
+/* Container Layout */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 95vh;
+    margin-left: 20px;
+    max-width: 90%;
+    gap: 1rem;
+}
+
+/* Specific Components */
+.plateslogo {
+    width: 5em;
+    height: auto;
+}
+
+p.plates {
+    font-size: 0.8em;
+    font-family: 'Onest', sans-serif;
+}
+
+.akh {
+    color: black;
+    font-family: 'Onest', sans-serif;
+}
+
+/* Vuno Section */
+div.vuno > a {
+    color: black;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    height: 95vh;
+    display: flex;
+    width: 100%;
+}
+
+div.vuno {padding: 0;}
+
+div.text {
+    font-size: min(4vw, xxx-large);
+    margin: 30px;
+    align-self: start;
+    max-width: 100%;
+}
+
+div.name {
+    height: 3em;
+    align-self: start;
+    border: solid 3px transparent;
+    border-top-color: black;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Animations */
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+@keyframes initiala {
+    0% { color: white; }
+    100% { color: #FF5733; }
+}
+
+div.text p::after {
+    content: '▮';
+    animation: blink 1s step-start infinite;
+}
+
+/* Text Styling */
+#animated-text {
+    margin-left: 20px;
+    width: 90%;
+    text-align: center;
+}
+
+span { transition: color 0.3s; }
+.o { color: #FF5733; }
+.initiala { animation: initiala 1s ease-in forwards; }
+
+/* Slide Indicators */
+.slide-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: white;
+    width: 20px;
+}

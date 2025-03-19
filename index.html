@@ -1,435 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>atechnology company</title>
     <link rel="icon" type="image/png" href="favicon/96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link rel="shortcut icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple.png" />
     <link rel="manifest" href="favicon/site.webmanifest" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbit:wght@400&family=Onest:wght@400&family=Jetbrains+Mono:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --rotate1: 8deg;
-            --loc1: 8%;
-            --loctwo1: 8%;
-            --rotate2: 8deg;
-            --loc2: 8%;
-            --loctwo2: 8%;
-            --rotate3: 8deg;
-            --loc3: 8%;
-            --loctwo3: 8%;
-            --rotate4: 8deg;
-            --loc4: 8%;
-            --loctwo4: 8%;
-            --rotate5: 8deg;
-            --loc5: 8%;
-            --loctwo5: 8%;
-            --rotate6: 8deg;
-            --loc6: 8%;
-            --loctwo6: 8%;
-            --rotate7: 8deg;
-            --loc7: 8%;
-            --loctwo7: 8%;
-            --rotate8: 8deg;
-            --loc8: 8%;
-            --loctwo8: 8%;
-            --rotate9: 8deg;
-            --loc9: 8%;
-            --loctwo9: 8%;
-            --rotate10: 8deg;
-            --loc10: 8%;
-            --loctwo10: 8%;
-            --rotate11: 8deg;
-            --loc11: 8%;
-            --loctwo11: 8%;
-            --rotate12: 8deg;
-            --loc12: 8%;
-            --loctwo12: 8%;
-            --rotate13: 8deg;
-            --loc13: 8%;
-            --loctwo13: 8%;
-            --rotate14: 8deg;
-            --loc14: 8%;
-            --loctwo14: 8%;
-            --rotate15: 8deg;
-            --loc15: 8%;
-            --loctwo15: 8%;
-            --rotate16: 8deg;
-            --loc16: 8%;
-            --loctwo16: 8%;
-            --rotate17: 8deg;
-            --loc17: 8%;
-            --loctwo17: 8%;
-            --rotate18: 8deg;
-            --loc18: 8%;
-            --loctwo18: 8%;
-            --rotate19: 8deg;
-            --loc19: 8%;
-            --loctwo19: 8%;
-            --rotate20: 8deg;
-            --loc20: 8%;
-            --loctwo20: 8%;
-        }
-
-        #logo span {
-            display: inline-block;
-            transition: color 1s ease-in-out;
-        }
-
-        #logo > .outer {
-            transition: transform 350ms ease;
-        }
-
-        #logo:hover > .outer {
-            transition-duration: 800ms;
-        }
-
-        #logo:hover > .outer > .inner {
-            animation: float 5s ease infinite;
-        }
-
-        #logo:hover > .outer:nth-child(1) {
-            transform: translate(var(--loc1), var(--loctwo1)) rotate(var(--rotate1));
-        }
-
-        #logo:hover > .outer:nth-child(2) {
-            transform: translate(var(--loc2), var(--loctwo2)) rotate(var(--rotate2));
-        }
-
-        #logo:hover > .outer:nth-child(3) {
-            transform: translate(var(--loc3), var(--loctwo3)) rotate(var(--rotate3));
-        }
-
-        #logo:hover > .outer:nth-child(4) {
-            transform: translate(var(--loc4), var(--loctwo4)) rotate(var(--rotate4));
-        }
-
-        #logo:hover > .outer:nth-child(5) {
-            transform: translate(var(--loc5), var(--loctwo5)) rotate(var(--rotate5));
-        }
-
-        #logo:hover > .outer:nth-child(6) {
-            transform: translate(var(--loc6), var(--loctwo6)) rotate(var(--rotate6));
-        }
-
-        #logo:hover > .outer:nth-child(7) {
-            transform: translate(var(--loc7), var(--loctwo7)) rotate(var(--rotate7));
-        }
-
-        #logo:hover > .outer:nth-child(8) {
-            transform: translate(var(--loc8), var(--loctwo8)) rotate(var(--rotate8));
-        }
-
-        #logo:hover > .outer:nth-child(9) {
-            transform: translate(var(--loc9), var(--loctwo9)) rotate(var(--rotate9));
-        }
-
-        #logo:hover > .outer:nth-child(10) {
-            transform: translate(var(--loc10), var(--loctwo10)) rotate(var(--rotate10));
-        }
-
-        #logo:hover > .outer:nth-child(11) {
-            transform: translate(var(--loc11), var(--loctwo11)) rotate(var(--rotate11));
-        }
-
-        #logo:hover > .outer:nth-child(12) {
-            transform: translate(var(--loc12), var(--loctwo12)) rotate(var(--rotate12));
-        }
-
-        #logo:hover > .outer:nth-child(13) {
-            transform: translate(var(--loc13), var(--loctwo13)) rotate(var(--rotate13));
-        }
-
-        #logo:hover > .outer:nth-child(14) {
-            transform: translate(var(--loc14), var(--loctwo14)) rotate(var(--rotate14));
-        }
-
-        #logo:hover > .outer:nth-child(15) {
-            transform: translate(var(--loc15), var(--loctwo15)) rotate(var(--rotate15));
-        }
-
-        #logo:hover > .outer:nth-child(16) {
-            transform: translate(var(--loc16), var(--loctwo16)) rotate(var(--rotate16));
-        }
-
-        #logo:hover > .outer:nth-child(17) {
-            transform: translate(var(--loc17), var(--loctwo17)) rotate(var(--rotate17));
-        }
-
-        #logo:hover > .outer:nth-child(18) {
-            transform: translate(var(--loc18), var(--loctwo18)) rotate(var(--rotate18));
-        }
-
-        #logo:hover > .outer:nth-child(19) {
-            transform: translate(var(--loc19), var(--loctwo19)) rotate(var(--rotate19));
-        }
-
-        #logo:hover > .outer:nth-child(20) {
-            transform: translate(var(--loc20), var(--loctwo20)) rotate(var(--rotate20));
-        }
-
-        body {
-            margin: 0;
-            height: 100vh;
-            width: 100vw;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: repeat(9, 1fr);
-            overflow: hidden;
-        }
-
-        span.o {
-            color: #ff5705;
-        }
-
-        header {
-            font-family: Onest;
-            font-size: medium;
-            grid-column-start: 1;
-            grid-column-end: 3;
-            display: flex;
-            align-items: center;
-            background: #fff8e7;
-            font-family: "Space Grotesk", "Onest", monospace;
-        }
-
-        section {
-            grid-row-start: 6;
-            grid-row-end: 10;
-            transition: transform 0.3s ease;
-        }
-
-        section:hover {
-            transform: scale(1.05);
-        }
-
-        section.plates {
-            width: 100%;
-            grid-row-start: 2;
-            grid-row-end: 6;
-            grid-column-start: 1;
-            grid-column-end: 3;
-        }
-
-        section.plates > a {
-            color: #fff8e6;
-            background-color: black;
-            font-family: "Onest", sans-serif;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr;
-            height: 100%
-        }
-
-        section.plates > a > div {
-            height: 100%;
-            width: 50%;
-        }
-
-        section.plates > a > div.info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-left: 40px;
-        }
-
-        section.plates > a > div.info>img {
-            width: 5em;
-            height: auto;
-        }
-
-        section.plates > a > div.info>h1 {
-            font-size: xxx-large;
-            margin-top: 0.2em;
-        }
-
-        section.plates > a > div.blurb {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            margin-right: 40px;
-        }
-
-        section.info, section.info > a {
-            background-color: #e3fde3;
-            font-family: "Orbit", "Onest", monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        section.info > a {
-            height: 100%;
-            width: 100%;
-            color: black;
-        }
-
-        section.info > a > div.blurb {
-            margin-left: 1em;
-            margin-top: 1em;
-            max-width: 80%;
-            max-height: 60%;
-            font-size: x-large;
-            align-self: start;
-        }
-
-        section.info > a >div.legal {
-            margin-bottom: 5px;
-            margin-left: 5px;
-            width: 90%;
-            align-self: start;
-            font-size: x-small;
-        }
-
-        section.vuno {
-            font-family: "JetBrains Mono", "Onest", monospace;
-            background: white;
-        }
-
-        section.vuno > a {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            width: 100%;
-            color: black;
-        }
-
-        section.vuno > a > div.text {
-            font-size: xxx-large;
-            margin: 30px;
-            align-self: start;
-        }
-
-        section.vuno > a > div.text p::after {
-            content: '▮';
-            animation: blink 1s step-start infinite;
-        }
-
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-
-        section.vuno > a > div.name {
-            height: 3em;
-            align-self: start;
-            border: solid 3px;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            border-bottom-color: transparent;
-            border-top-color: black;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        section.vuno > a > div.name > p {
-            margin-left: 15px;
-            font-size: large;
-        }
-
-        h1.logo {
-            margin-left: 40px;
-        }
-
-        .letter {
-            display: inline-block;
-            color: black;
-            transition: color 1s ease-in-out;
-        }
-
-        .letter.o {
-            color: #ff5705;
-        }
-
-        a {text-decoration: none;}
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Onest:wght@400;700&family=Orbit:wght@400;700&display=swap" rel="stylesheet">
+    <title>atechnology company</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <header>
-        <a href="https://undivisible.dev/"><h1 class='logo' id='logo'></h1></a>
-    </header>
-    <section class='plates'>
-        <a href="plates.html">
-            <div class='info'><img src="fsq1d.png" alt="Logo">
-                <h1>Plates</h1>
+    <main>
+        <section class="section">
+            <div class="title-page">
+                <span id="animated-text">this is <span id="a-letter">a</span> technology company</span>
             </div>
-            <div class='blurb'><i>platform of the Internet as a technologically enabled singularity</i></div>
-        </a>
-    </section>
-    <section class='info'>
-        <a href="https://undivisible.dev/">
-            <div class='blurb'>
-                <span><span class='o'>a</span>technology company</span> was started to create
-                <span class='letter' data-color="friendly">friendly,</span>
-                <span class='letter' data-color="fun">fun,</span>
-                <span class='letter' data-color="natural">natural tech</span> by
-                <span class='letter' data-color="reinventing">reinventing</span>
-                <span class='letter' data-color="best">the best possible wares</span> for
-                <span class='letter' data-color="people">people.</span>
+        </section>
+        <section class="section">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-item">
+                        <a>
+                            <div class="container">
+                                <img src="fsq1d.png" alt="Logo" class="plateslogo">
+                                <h1>Plates</h1>
+                                <p class="plates">Plates (Platform of the Internet as a Technologically Enabled Singularity) is a unitary platform of systems, to redesign interfaces to be up to standard for the modern technological age.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a>
+                            <div class="container akh">
+                                <h1>Akh</h1>
+                                <p>Akh is the companion for every muslim. With helpful features with our brothers and sisters in mind, we created the most balanced apps with the most helpful features so that you can focus on your deen better. This is why we included ALIF (Artificial Learning Integration for Fataawa) based on the Plates engine, an AI-powered search engine to find rulings from verified scholars so that you can input any scenario and receive helpful guidance.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item vuno">
+                        <a>
+                            <div class='text'><p>a text editor and more, written in rust with ai features to make your notepad superior, from code highlighting and editing, to simply taking notes in class with markdown support</p></div>
+                            <div class='name'><p>vuno</p></div>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class='legal'>96994565415, a subsidiary of undivisible industries</div>
-        </a>
-    </section>
-    <section class='vuno'>
-        <a href='https://github.com/atechnology-company/vuno/'>
-            <div class='text'><p>a text editor and more</p></div>
-            <div class='name'><p>vuno</p></div>
-        </a>
-    </section>
-
+            <div class="slide-indicators">
+                <div class="indicator active"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
+        </section>  
+    </main>
     <script>
-        function randoms() {
-            const element = document.getElementById('logo');
-            element.addEventListener('mouseenter', () => {
-                for (let i = 1; i <= 20; i++) {
-                    document.documentElement.style.setProperty(`--rotate${i}`, Math.floor(Math.random() * 201) - 100 + 'deg');
-                    document.documentElement.style.setProperty(`--loc${i}`, Math.floor(Math.random() * 201) - 100 + '%');
-                    document.documentElement.style.setProperty(`--loctwo${i}`, Math.floor(Math.random() * 201) - 100 + '%');
-                }
+        // Add this at the start of your script section
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        window.onload = () => {
+            window.scrollTo(0, 0);
+        };
+
+        const carousel = document.querySelector('.carousel');
+        let currentIndex = 0;
+        const maxIndex = 2;   
+            // Update indicators
+        function updateCarousel() {
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                const offset = -currentIndex * 95;
+                indicator.classList.toggle('active', index === currentIndex);
+                carousel.style.transform = `translateX(${offset}vw)`;
             });
         }
 
-        function fancyText() {
-            const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        let isScrolling = false;
+        let scrollTimeout;
+        let scrollAccumulator = 0;
+        const SCROLL_THRESHOLD = 50; // Adjust this value to change sensitivity
 
-            const element = document.getElementById('logo');
-            if (!element) return;
-
-            const text = "atechnology company".split('');
-            element.innerHTML = '';
-
-            text.forEach((value, index) => {
-                const outer = document.createElement('span');
-                outer.className = 'outer';
-
-                const inner = document.createElement('span');
-                inner.className = 'inner';
-                inner.style.animationDelay = `${rand(-5000, 0)}ms`;
-
-                const letter = document.createElement('span');
-                letter.className = 'letter';
-                letter.innerText = value === ' ' ? '\u00A0' : value; // Retain space
-                letter.style.animationDelay = `${index * 100}ms`;
-
-                if (value === 'a' && index < 12) { // Only the 'a' in "atechnology" should be orange
-                    letter.classList.add('o');
+        // Replace the existing wheel event handler
+        carousel.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            // Accumulate scroll values
+            scrollAccumulator += Math.abs(e.deltaY);
+            
+            // Clear existing timeout
+            clearTimeout(scrollTimeout);
+            
+            if (!isScrolling && scrollAccumulator > SCROLL_THRESHOLD) {
+                isScrolling = true;
+                scrollAccumulator = 0;  // Reset accumulator
+                
+                if (e.deltaY > 0) {
+                    currentIndex = Math.min(maxIndex, currentIndex + 1);
+                } else {
+                    currentIndex = Math.max(0, currentIndex - 1);
                 }
+                
+                updateCarousel();
+                
+                // Add delay before allowing next scroll
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 700);  // Increased delay for smoother control
+            }
+            
+            // Reset accumulator if no scroll for 300ms
+            scrollTimeout = setTimeout(() => {
+                scrollAccumulator = 0;
+            }, 300);
+        }, { passive: false });
 
-                inner.appendChild(letter);
-                outer.appendChild(inner);
-                element.appendChild(outer);
-            });
-        }
+        // Title animation
+        const textElement = document.getElementById('animated-text');
+        const aLetter = document.getElementById('a-letter');
+        
+        // Add initial animation class after a small delay
+        setTimeout(() => {
+            aLetter.classList.add('initiala');
+        }, 100);
+
+        const texts = [
+            "this is a technology company",
+            "this is <span class='o'>a</span>technology company",
+            "<span><span class='o'>a</span>technology company</span> was started to create <span class='letter' data-color='friendly'>friendly,</span> <span class='letter' data-color='fun'>fun,</span> <span class='letter' data-color='natural'>natural tech</span> by <span class='letter' data-color='reinventing'>reinventing</span> <span class='letter' data-color='best'>the best possible wares</span> for <span class='letter' data-color='people'>people.</span>"
+        ];
 
         function applyColors() {
             const colors = {
@@ -451,13 +151,26 @@
                 }
             });
         }
+        
+        function animateText(index) {
+            if (index < texts.length) {
+                textElement.style.opacity = 1;
+                $(textElement).fadeOut(() => {
+                    textElement.innerHTML = texts[index];
+                    $(textElement).fadeIn(() => {
+                        if (index === texts.length - 1) {
+                            applyColors();
+                        } else {
+                            setTimeout(() => animateText(index + 1), 1000);
+                        }
+                    });
+                });
+            }
+        }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            fancyText();
-            randoms();
-            applyColors();
-        });
+        // Start the animation from index 0
+        textElement.style.opacity = 0;
+        animateText(0);
     </script>
 </body>
-
 </html>
