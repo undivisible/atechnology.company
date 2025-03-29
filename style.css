@@ -204,3 +204,27 @@ span { transition: color 0.3s; }
     background-color: white;
     width: 2vh;
 }
+
+header {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    padding: 40px 40px;
+    width: 100%;
+    box-sizing: border-box; 
+    overflow: hidden;
+}
+
+header a {
+    text-decoration: none; 
+    color: #fff8e699;
+    font-size: 1.5rem;
+    transition: color 0.5s;
+    margin-left: 40px;
+}
+
+header > a:hover {
+    color: #fff8e6;
+    text-decoration: none;
+}
