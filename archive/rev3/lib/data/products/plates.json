@@ -1,0 +1,56 @@
+{
+	"id": "plates",
+	"name": "Plates",
+	"tagline": "A unitary platform of systems",
+	"description": "Plates is a unitary platform of systems, designed to establish healthy relationships between you and your devices.",
+	"longDescription": "Plates revolutionizes how you interact with your digital ecosystem. By creating a unified platform that connects all your devices and applications, Plates ensures that technology serves you, not the other way around. Our innovative approach focuses on establishing healthy, productive relationships between users and their digital tools.",
+	"bg": "bg-black",
+	"text": "text-[#fff8e6]",
+	"icon": "/images/plates.png",
+	"features": [
+		"Unified device management",
+		"Intelligent automation",
+		"Privacy-first design",
+		"Cross-platform compatibility",
+		"Real-time synchronization"
+	],
+	"technologies": ["Svelte", "Tauri", "Rust", "TypeScript"],
+	"downloads": {
+		"windows": {
+			"intel": {
+				"url": "/downloads/plates-windows-intel.exe",
+				"size": "45.2 MB",
+				"checksum": "sha256:abc123..."
+			},
+			"arm": {
+				"url": "/downloads/plates-windows-arm.exe",
+				"size": "43.8 MB",
+				"checksum": "sha256:def456..."
+			}
+		},
+		"macos": {
+			"intel": {
+				"url": "/downloads/plates-macos-intel.dmg",
+				"size": "52.1 MB",
+				"checksum": "sha256:ghi789..."
+			},
+			"silicon": {
+				"url": "/downloads/plates-macos-silicon.dmg",
+				"size": "48.9 MB",
+				"checksum": "sha256:jkl012..."
+			}
+		},
+		"linux": {
+			"x64": {
+				"url": "/downloads/plates-linux-x64.AppImage",
+				"size": "41.7 MB",
+				"checksum": "sha256:mno345..."
+			}
+		}
+	},
+	"screenshots": [
+		"/images/plates-screenshot-1.png",
+		"/images/plates-screenshot-2.png",
+		"/images/plates-screenshot-3.png"
+	]
+}

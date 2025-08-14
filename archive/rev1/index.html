@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon/96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
+    <script src="https://kit.fontawesome.com/b0d9b822d8.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Onest:wght@400;700&family=Orbit:wght@400;700&display=swap" rel="stylesheet">
+    <title>atechnology company</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="https://instagram.com/atechnologycompany/"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://github.com/atechnology-company/"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:undivisible@vk.com"><i class="fa-solid fa-envelope"></i></a>
+    </header>
+    <main>
+        <section class="section">
+            <div class="title-page">
+                <span id="animated-text">this is <span id="a-letter">a</span> technology company</span>
+            </div>
+        </section>
+        <section class="section">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-item">
+                        <a>
+                            <div class="container">
+                                <img src="fsq1d.png" alt="Logo" class="plateslogo">
+                                <h1>Plates</h1>
+                                <p class="plates">Plates (Platform of the Internet as a Technologically Enabled Singularity) is a unitary platform of systems, to redesign interfaces to be up to standard for the modern technological age.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a>
+                            <div class="container akh">
+                                <h1>Akh</h1>
+                                <p>Akh is the companion for every muslim. With helpful features with our brothers and sisters in mind, we created the most balanced apps with the most helpful features so that you can focus on your deen better. This is why we included ALIF (Artificial Learning Integration for Fataawa) based on the Plates engine, an AI-powered search engine to find rulings from verified scholars so that you can input any scenario and receive helpful guidance.</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item vuno">
+                        <a>
+                            <div class='text'><p>a text editor and more, written in rust with ai features to make your notepad superior, from code highlighting and editing, to simply taking notes in class with markdown support</p></div>
+                            <div class='name'><p>vuno</p></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-indicators">
+                <div class="indicator active"></div>
+                <div class="indicator"></div>
+                <div class="indicator"></div>
+            </div>
+        </section>  
+    </main>
+    <script>
+        // Add this at the start of your script section
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        
+        window.onload = () => {
+            window.scrollTo(0, 0);
+        };
+
+        const carousel = document.querySelector('.carousel');
+        let currentIndex = 0;
+        const maxIndex = 2;   
+            // Update indicators
+        function updateCarousel() {
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                const offset = -currentIndex * 98;
+                indicator.classList.toggle('active', index === currentIndex);
+                carousel.style.transform = `translateX(${offset}vw)`;
+            });
+        }
+
+        let isScrolling = false;
+        let scrollTimeout;
+        let scrollAccumulator = 0;
+        const SCROLL_THRESHOLD = 50; // Adjust this value to change sensitivity
+
+        // Replace the existing wheel event handler
+        carousel.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            // Accumulate scroll values
+            scrollAccumulator += Math.abs(e.deltaY);
+            
+            // Clear existing timeout
+            clearTimeout(scrollTimeout);
+            
+            if (!isScrolling && scrollAccumulator > SCROLL_THRESHOLD) {
+                isScrolling = true;
+                scrollAccumulator = 0;  // Reset accumulator
+                
+                if (e.deltaY > 0) {
+                    currentIndex = Math.min(maxIndex, currentIndex + 1);
+                } else {
+                    currentIndex = Math.max(0, currentIndex - 1);
+                }
+                
+                updateCarousel();
+                
+                // Add delay before allowing next scroll
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 700);  // Increased delay for smoother control
+            }
+            
+            // Reset accumulator if no scroll for 300ms
+            scrollTimeout = setTimeout(() => {
+                scrollAccumulator = 0;
+            }, 300);
+        }, { passive: false });
+
+        // Touch handling for mobile devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // минимальное расстояние для свайпа
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Свайп влево
+                    currentIndex = Math.min(maxIndex, currentIndex + 1);
+                } else {
+                    // Свайп вправо
+                    currentIndex = Math.max(0, currentIndex - 1);
+                }
+                updateCarousel();
+            }
+        }
+
+        // Title animation
+        const textElement = document.getElementById('animated-text');
+        const aLetter = document.getElementById('a-letter');
+        
+        // Add initial animation class after a small delay
+        setTimeout(() => {
+            aLetter.classList.add('initiala');
+        }, 100);
+
+        const texts = [
+            "this is a technology company",
+            "this is <span class='o'>a</span>technology company",
+            "<span><span class='o'>a</span>technology company</span> was started to create <span class='letter' data-color='friendly'>friendly,</span> <span class='letter' data-color='fun'>fun,</span> <span class='letter' data-color='natural'>natural tech</span> by <span class='letter' data-color='reinventing'>reinventing</span> <span class='letter' data-color='best'>the best possible wares</span> for <span class='letter' data-color='people'>people.</span>"
+        ];
+
+        function applyColors() {
+            const colors = {
+                friendly: '#ffa8dc',
+                fun: '#ffba98',
+                natural: '#266526',
+                reinventing: '#557dff',
+                best: '#e9be50',
+                people: '#ff6969'
+            };
+
+            const spans = document.querySelectorAll('.letter[data-color]');
+            spans.forEach((span, index) => {
+                const color = colors[span.getAttribute('data-color')];
+                if (color) {
+                    setTimeout(() => {
+                        span.style.color = color;
+                    }, index * 100);
+                }
+            });
+        }
+        
+        function animateText(index) {
+            if (index < texts.length) {
+                textElement.style.opacity = 1;
+                $(textElement).fadeOut(() => {
+                    textElement.innerHTML = texts[index];
+                    $(textElement).fadeIn(() => {
+                        if (index === texts.length - 1) {
+                            applyColors();
+                        } else {
+                            setTimeout(() => animateText(index + 1), 1000);
+                        }
+                    });
+                });
+            }
+        }
+
+        // Start the animation from index 0
+        textElement.style.opacity = 0;
+        animateText(0);
+    </script>
+</body>
+</html>

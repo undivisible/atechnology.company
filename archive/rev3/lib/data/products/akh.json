@@ -1,0 +1,48 @@
+{
+	"id": "akh",
+	"name": "Akh",
+	"tagline": "The homeplace for all Islamic software",
+	"description": "Akh is the homeplace for all Islamic related software, aiming to unify the community on one platform.",
+	"longDescription": "The utilitarian muslim companion. Akh aims to be the one for all in Islamic software, bundling everything you need for your deen into one super simple easy to use app, and more. Akh includes at this moment, salah times, qibla finder, a quran reader, hadith reader (soon), prayer displays for mosques and ALIF. ALIF is the Artificial Learning Integration for Fataawa, it is a fatwa search engine with AI functionality, allowing it to understand the information it receives and puts it into an edible format for you. It is limited with information, so that it only gets its data from verified sources.",
+	"version": "1.4.2",
+	"releaseDate": "2024-02-01",
+	"features": [
+		"Prayer times calculation",
+		"Qibla finder",
+		"Quran reader with translations",
+		"Hadith collection",
+		"AI-powered fatwa search (ALIF)",
+		"Prayer displays for mosques",
+		"Islamic calendar",
+		"Dhikr counter"
+	],
+	"technologies": [
+		"Svelte",
+		"Tailwind CSS",
+		"TypeScript",
+		"Tauri",
+		"Rust",
+		"Gemini 2.5 Flash",
+		"Firebase",
+		"OpenStreetMap",
+		"Al Adhan API",
+		"QuranAPI"
+	],
+	"bg": "bg-[#fff8e6]",
+	"text": "text-black",
+	"icon": "/images/b/akh.png",
+	"downloads": {
+		"android": {
+			"apk": {
+				"url": "/downloads/akh-android.apk",
+				"size": "28.4 MB",
+				"checksum": "sha256:efg123..."
+			}
+		}
+	},
+	"screenshots": [
+		"/images/akh-screenshot-1.png",
+		"/images/akh-screenshot-2.png",
+		"/images/akh-screenshot-3.png"
+	]
+}
