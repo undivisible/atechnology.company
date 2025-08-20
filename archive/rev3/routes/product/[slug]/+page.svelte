@@ -113,17 +113,13 @@
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@100..900&display=swap"
-		rel="stylesheet"
-	/>
 	<!-- Material Symbols Rounded -->
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 	<title>{data.product.name} | atechnology company</title>
 	<meta name="description" content={data.product.description} />
 </svelte:head>
 
-<div class="min-h-screen bg-transparent pt-20 font-[Instrument_Sans]">
+<div class="min-h-screen bg-transparent pt-20 font-[Instrument Sans]">
 	{#if mounted}
 		<!-- Back Button -->
 		<div in:fade={{ duration: 300 }} class="fixed top-24 left-6 z-40">

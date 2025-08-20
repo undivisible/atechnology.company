@@ -66,10 +66,6 @@
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@100..900&display=swap"
-		rel="stylesheet"
-	/>
 </svelte:head>
 
 <nav class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-10 py-6 pointer-events-none">
@@ -109,7 +105,7 @@
 	</div>
 </nav>
 
-<main class="font-[Instrument_Sans] pt-24 absolute">
+<main class="font-[Instrument Sans] pt-24 absolute">
 	<slot />
 </main>
 

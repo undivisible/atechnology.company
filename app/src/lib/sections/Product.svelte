@@ -42,7 +42,7 @@
 </section>
 
 <style>
-  .product { display:flex; flex-wrap:wrap; align-items:center; padding: clamp(2rem,4vw,4rem); gap:3rem; min-height:100vh; min-width:100vw; box-sizing:border-box; }
+  .product { display:flex; flex-direction:column; align-items:center; justify-content:center; padding: clamp(2rem,4vw,4rem); gap:2rem; min-height:100vh; min-width:100vw; box-sizing:border-box; }
   .logo-block {
     width: auto;
     max-width: 170px;
@@ -50,7 +50,6 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    border-radius: 1.25rem;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
     margin-bottom: 1.5rem;
     overflow: hidden;
@@ -63,8 +62,8 @@
     aspect-ratio: 1 / 1;
     display: block;
   }
-  .left { flex:1 1 480px; min-width:320px; }
-  .product-name { font-size: clamp(3rem,7vw,7.5rem); line-height:.85; font-weight:700; }
+  .left { flex-direction: column; width: 100%; min-width:0; display:flex; align-items:start; justify-content:center; }
+  .product-name { font-size: clamp(2rem,6vw,4rem); line-height:1; font-weight:700; }
   .tech-tags { display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; list-style:none; padding:0; }
   .tech-tags li { font-weight:600; font-size:1.25rem; padding:.5rem 1rem; border-radius:.5rem; }
   .t-react { background:rgba(104,72,63,0.2); color:#68483f; }
@@ -83,6 +82,20 @@
   .links a { text-decoration:none; position:relative; }
   .links a::after { content:''; position:absolute; left:0; bottom:-2px; height:2px; width:0; background:#fff; transition:width .3s; }
   .links a:hover::after { width:100%; }
-  .description { flex:1 1 520px; font-size:clamp(1.75rem,2.3vw,4rem); font-weight:600; line-height:1.05; }
-  @media (max-width:1000px){ .description { flex-basis:100%; } }
+  .description { width:100%; font-size:clamp(1.25rem,2.3vw,1.75rem); font-weight:600; line-height:1.25; max-width:900px; }
+
+  /* On wide screens, present content side-by-side */
+  @media (min-width:1100px) {
+    .product { flex-direction:row; align-items:center; gap:3rem; justify-content:center; }
+    .left { flex:1 1 480px; min-width:320px; width: auto; display:block; text-align:left; }
+    .description { flex:1 1 520px; width: auto; font-size:clamp(1.75rem,2.3vw,4rem); text-align:left; max-width:none; }
+    .product { padding-left: clamp(2rem,10vw,8rem); padding-right: clamp(2rem,10vw,8rem); }
+  }
+
+  /* Tidy medium screens */
+  @media (max-width:1100px) and (min-width:641px) {
+    .logo-block { max-width:140px; height:140px; }
+    .product-name { font-size: clamp(2rem,6vw,3.5rem); }
+    .description { font-size: clamp(1.25rem,2.5vw,1.75rem); }
+  }
 </style>
