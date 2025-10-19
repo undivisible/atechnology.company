@@ -20,22 +20,6 @@
 			]
 		},
 		{
-			id: 'infrastruct',
-			title: 'Infrastruct',
-			description: 'Infrastruct is a belief-agnostic logic-filtered unitarian jurisprudence system for all major religions.',
-			logo: '/infrastruct-logo.tsx',
-			tech: [
-				{ label: 'next.js' },
-				{ label: 'react', class: 't-react' },
-				{ label: 'typescript', class: 't-ts' },
-				{ label: 'tailwind', class: 't-tailwind' }
-			],
-			links: [
-				{ label: 'github', href: 'https://github.com/atechnology-company/infrastruct', external: true },
-				{ label: 'whitepaper', href: 'https://undivisible.notion.site/infrastruct-22f5f9801be48068aa1bdb1899ad9ed4', external: true }
-			]
-		},
-		{
 			id: 'standpoint',
 			title: 'Standpoint',
 			description: 'Standpoint is the ultimate opinion-based social media platform and tool for creating tierlists, voting on polls and sharing standpoints.',
@@ -55,6 +39,19 @@
 			]
 		},
 		{
+			id: 'berd',
+			title: 'Berd',
+			description: 'Berd is the first chat app on iOS to use the Apple Intelligence API.',
+			logo: '/standpoint.png',
+			tech: [
+				{ label: 'swift', class: 't-swift' },
+				{ label: 'ai', class: 't-ai' }
+			],
+			links: [
+				{ label: 'github', href: 'https://github.com/atechnology-company/bert', external: true }
+			]
+		},
+		{
 			id: 'vuno',
 			title: 'Vuno',
 			description: 'Vuno is the utilitarian keyboard focused minimal text editor for everyday life. Edit code, documents, or just take notes, with markdown support, code highlighting and an AI copilot.',
@@ -69,6 +66,22 @@
 			],
 			links: [
 				{ label: 'github', href: 'https://github.com/atechnology-company/vuno', external: true }
+			]
+		},
+		{
+			id: 'infrastruct',
+			title: 'Infrastruct',
+			description: 'Infrastruct is a belief-agnostic logic-filtered unitarian jurisprudence system for all major religions.',
+			logo: '/infrastruct-logo.tsx',
+			tech: [
+				{ label: 'next.js' },
+				{ label: 'react', class: 't-react' },
+				{ label: 'typescript', class: 't-ts' },
+				{ label: 'tailwind', class: 't-tailwind' }
+			],
+			links: [
+				{ label: 'github', href: 'https://github.com/atechnology-company/infrastruct', external: true },
+				{ label: 'whitepaper', href: 'https://undivisible.notion.site/infrastruct-22f5f9801be48068aa1bdb1899ad9ed4', external: true }
 			]
 		},
 		{
