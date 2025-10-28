@@ -13,6 +13,9 @@
 			tech: [
 				{ label: 'swift', class: 't-swift' },
 				{ label: 'rust', class: 't-rust' },
+				{ label: 'kotlin', class: 't-kotlin' },
+				{ label: 'objective-c', class: 't-objc' },
+				{ label: 'c++', class: 't-cpp' },
 				{ label: 'alpine', class: 't-alpine' },
 				{ label: 'ai', class: 't-ai' }
 			],
@@ -41,10 +44,11 @@
 		{
 			id: 'berd',
 			title: 'Berd',
-			description: 'Berd is the first chat app on iOS to use the Apple Intelligence API.',
-			logo: '/standpoint.png',
+			description: 'Berd is the first chat app on iOS to use the Apple Intelligence API, with Visual Intelligence and Private Cloud Compute.',
+			logo: '/berd.png',
 			tech: [
 				{ label: 'swift', class: 't-swift' },
+				{ label: 'c++', class: 't-cpp' },
 				{ label: 'ai', class: 't-ai' }
 			],
 			links: [

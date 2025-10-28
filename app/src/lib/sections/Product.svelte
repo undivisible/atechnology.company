@@ -78,6 +78,9 @@
   .t-python { background:rgba(0,255,26,0.2); color:#00ff1a; }
   .t-firebase { background:rgba(255,47,0,0.2); color:#ff2f00; }
   .t-tauri { background:rgba(0,144,255,0.2); color:#0090ff; }
+  .t-kotlin { background: rgba(255, 102, 0, 0.2); color: #ff6600; }
+  .t-objc { background: rgba(102, 0, 204, 0.2); color: #6600cc; }
+  .t-cpp { background: rgba(0, 102, 204, 0.2); color: #0066cc; }
   .links { display:flex; gap:1.25rem; margin-top:3rem; font-weight:600; font-size:1.25rem; }
   .links a { text-decoration:none; position:relative; }
   .links a::after { content:''; position:absolute; left:0; bottom:-2px; height:2px; width:0; background:#fff; transition:width .3s; }
