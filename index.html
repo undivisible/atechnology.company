@@ -78,13 +78,12 @@
                 line-height: 1;
             }
 
-            /* Mobile layout — vertical flow */
+            /* Mobile layout */
             @media (max-width: 768px) {
-                /* Homepage */
+                /* Homepage: flex column, blurb directly above hero title */
                 main.desktop-layout {
                     display: flex !important;
                     flex-direction: column !important;
-                    justify-content: space-between !important;
                     padding: 20px !important;
                     overflow-y: auto !important;
                 }
@@ -92,42 +91,63 @@
                     position: static !important;
                     padding: 0 !important;
                 }
+                /* 1. nav at top */
                 main.desktop-layout .nav-stack {
                     order: 1;
                     align-items: flex-start !important;
-                    margin-bottom: 0.5rem;
                 }
+                /* 2. spacer pushes content down */
                 main.desktop-layout .blurb {
                     order: 2;
                     max-width: 100% !important;
-                    margin-bottom: auto;
+                    margin-top: auto;
+                    margin-bottom: 1rem;
+                    font-size: clamp(0.9rem, 3.5vw, 1.4rem) !important;
                 }
+                /* 3. hero title */
                 main.desktop-layout .hero-title {
                     order: 3;
                 }
                 main.desktop-layout .hero-title h1 {
-                    font-size: clamp(2.5rem, 11vw, 5rem) !important;
+                    font-size: clamp(2.5rem, 13vw, 5rem) !important;
+                    line-height: 55% !important;
                 }
+                /* 4. about button bottom-left */
                 main.desktop-layout .about-btn {
                     order: 4;
                     text-align: left;
+                    margin-top: 1rem;
+                }
+                main.desktop-layout .about-btn > div {
+                    font-size: clamp(1.2rem, 5vw, 2rem) !important;
                 }
 
-                /* Product overlay */
+                /* Nav items smaller on mobile — override inline styles */
+                .nav-stack > div,
+                .nav-stack > :not(template) {
+                    font-size: clamp(1.2rem, 5vw, 2rem) !important;
+                }
+
+                /* Product overlay: vertical flow, desc+stack at bottom */
                 .thing-overlay-inner {
                     display: flex !important;
                     flex-direction: column !important;
-                    justify-content: space-between !important;
                     overflow-y: auto !important;
                 }
-                .thing-overlay-inner > * {
+                .thing-overlay-inner > .thing-desc {
                     position: static !important;
                     max-width: 100% !important;
+                    margin-top: auto;
+                    order: 2;
                 }
-
-                /* About overlay */
-                .about-overlay-inner {
-                    overflow-y: auto !important;
+                .thing-overlay-inner > .thing-desc p {
+                    font-size: clamp(0.9rem, 3.5vw, 1.4rem) !important;
+                    margin-bottom: 1rem !important;
+                }
+                .thing-overlay-inner > .thing-links {
+                    position: static !important;
+                    order: 3;
+                    margin-top: 1rem;
                 }
             }
 
@@ -272,7 +292,7 @@
             >
                 <!-- desc + stack -->
                 <div
-                    class="absolute left-5 top-5 max-w-[65%]"
+                    class="thing-desc absolute left-5 top-5 max-w-[65%]"
                     x-show="activeThing"
                     x-transition
                 >
@@ -302,7 +322,7 @@
 
                 <!-- links (bottom left) -->
                 <div
-                    class="absolute left-5 bottom-5"
+                    class="thing-links absolute left-5 bottom-5"
                     x-show="activeThing && currentData?.links?.length > 0"
                     x-transition
                 >
