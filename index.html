@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>atechnology company</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            instrument: ['"Instrument Sans"', "sans-serif"],
+                        },
+                        colors: { agreen: "#00893B" },
+                    },
+                },
+            };
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                overflow: hidden;
+            }
+            .vtrim {
+                leading-trim: both;
+                text-edge: cap;
+                -webkit-leading-trim: both;
+                -webkit-text-edge: cap;
+            }
+
+            .grain {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 100;
+                opacity: 0.03;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+
+            .cursor-glow {
+                position: fixed;
+                width: 500px;
+                height: 500px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(0, 137, 59, 0.04) 0%,
+                    transparent 70%
+                );
+                pointer-events: none;
+                z-index: 1;
+                transform: translate(-50%, -50%);
+                transition:
+                    left 0.15s ease-out,
+                    top 0.15s ease-out;
+            }
+
+            .nav-stack {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0;
+            }
+            .nav-stack > div {
+                line-height: 1;
+            }
+
+            @keyframes riseUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(20px);
+                }
+                to {
+                    opacity: var(--end-op, 0.5);
+                    transform: translateX(0);
+                }
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            .anim-rise {
+                opacity: 0;
+                animation: riseUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            .anim-slide {
+                opacity: 0;
+                animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            .anim-fade {
+                opacity: 0;
+                animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-black text-white font-instrument h-screen w-screen overflow-hidden"
+        x-data="app()"
+        @keydown.escape.window="closeAll()"
+        @mousemove.window="glow($event)"
+    >
+        <div class="grain"></div>
+        <div class="cursor-glow" :style="`left:${mx}px;top:${my}px`"></div>
+
+        <!-- ═══ MAIN ═══ -->
+        <main class="relative w-full h-screen p-5">
+            <!-- blurb -->
+            <p
+                class="vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0"
+                style="
+                    font-size: clamp(1rem, 2.8vw, 3.4rem);
+                    line-height: 80%;
+                    animation-delay: 0.2s;
+                "
+            >
+                <span class="text-agreen">a</span>technology company was started
+                to make useful <span class="text-agreen">things</span> people
+                enjoy to use, with a focus on design, intention and efficiency.
+            </p>
+
+            <!-- nav -->
+            <nav class="nav-stack absolute top-5 right-5 z-50">
+                <!-- our things / ← back -->
+                <div
+                    class="vtrim lowercase font-medium cursor-pointer select-none transition-colors duration-300 anim-slide opacity-0"
+                    style="
+                        font-size: clamp(1.5rem, 3.8vw, 4.5rem);
+                        --end-op: 1;
+                        animation-delay: 0.5s;
+                    "
+                    :class="activeThing ? 'text-agreen opacity-100' : 'text-white'"
+                    @click="activeThing && closeThing()"
+                    x-text="activeThing ? '← our things' : 'our things'"
+                ></div>
+
+                <!-- product items -->
+                <template x-for="(key, i) in thingKeys" :key="key">
+                    <div
+                        class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300 anim-slide opacity-0"
+                        :style="`font-size: clamp(1.5rem, 3.8vw, 4.5rem); --end-op: 0.5; animation-delay: ${0.6 + i * 0.1}s`"
+                        :class="activeThing === key ? '!opacity-100 text-white' : 'opacity-50 text-white/50 hover:opacity-100 hover:text-white'"
+                        @click="toggleThing(key)"
+                        x-text="key"
+                    ></div>
+                </template>
+            </nav>
+
+            <!-- hero -->
+            <div
+                class="absolute bottom-[4%] left-0 px-5 anim-rise opacity-0"
+                style="animation-delay: 0.4s"
+            >
+                <h1
+                    class="vtrim lowercase font-medium text-white"
+                    style="
+                        font-size: clamp(4rem, 16vw, 19.5rem);
+                        line-height: 50%;
+                    "
+                >
+                    we are<br /><span class="text-agreen">a</span
+                    >technology<br />company
+                </h1>
+            </div>
+
+            <!-- about button — always on top -->
+            <div
+                class="absolute bottom-5 right-5 anim-fade opacity-0"
+                style="animation-delay: 1.3s; z-index: 70"
+            >
+                <div
+                    class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300"
+                    style="
+                        font-size: clamp(1.5rem, 3.8vw, 4.5rem);
+                        line-height: 1;
+                    "
+                    :class="aboutOpen ? 'text-agreen opacity-100' : 'text-white/50 opacity-50 hover:text-white hover:opacity-100'"
+                    @click="toggleAbout()"
+                >
+                    about us
+                </div>
+            </div>
+        </main>
+
+        <!-- ═══ THING OVERLAY ═══ -->
+        <div
+            class="fixed inset-0 bg-black z-40 transition-opacity duration-500"
+            :class="activeThing ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+        >
+            <div
+                class="p-5 h-screen relative transition-all duration-500"
+                :class="(activeThing && !transitioning) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
+            >
+                <!-- desc + stack -->
+                <div
+                    class="absolute left-5 top-5 max-w-[65%]"
+                    x-show="activeThing"
+                    x-transition
+                >
+                    <p
+                        class="vtrim lowercase font-medium text-white mb-12"
+                        style="
+                            font-size: clamp(1rem, 2.8vw, 3.4rem);
+                            line-height: 80%;
+                        "
+                        x-text="currentData?.desc"
+                    ></p>
+
+                    <!-- stack -->
+                    <div class="flex flex-wrap gap-3">
+                        <template
+                            x-for="tech in (currentData?.stack || [])"
+                            :key="tech"
+                        >
+                            <span
+                                class="border text-xs font-medium uppercase tracking-widest px-4 py-2 inline-block rounded-full"
+                                :style="`color: ${colorForText(tech)}; border-color: ${colorForText(tech)}4d`"
+                                x-text="tech"
+                            ></span>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- links (bottom left) -->
+                <div
+                    class="absolute left-5 bottom-5"
+                    x-show="activeThing && currentData?.links?.length > 0"
+                    x-transition
+                >
+                    <div class="flex flex-wrap gap-8">
+                        <template
+                            x-for="link in (currentData?.links || [])"
+                            :key="link.label"
+                        >
+                            <a
+                                :href="link.url"
+                                target="_blank"
+                                class="group flex items-center gap-2 text-xl font-medium text-white hover:text-agreen transition-colors duration-300"
+                            >
+                                <span x-text="link.label"></span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+                                    />
+                                </svg>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ ABOUT OVERLAY ═══ -->
+        <div
+            class="fixed inset-0 bg-black z-60 transition-opacity duration-500"
+            style="z-index: 60"
+            :class="aboutOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+        >
+            <div
+                class="p-5 h-screen relative overflow-y-auto transition-all duration-500"
+                :class="aboutOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
+            >
+                <div class="max-w-[700px]">
+                    <p
+                        class="vtrim lowercase font-medium text-white mb-6"
+                        style="
+                            font-size: clamp(1rem, 2.8vw, 3.4rem);
+                            line-height: 80%;
+                        "
+                    >
+                        <span class="text-agreen">a</span>technology company
+                        builds tools at the intersection of design and
+                        engineering. we believe software should feel inevitable
+                        — like it was always supposed to exist.
+                    </p>
+
+                    <div class="mt-12">
+                        <p
+                            class="vtrim lowercase font-medium text-white/30 uppercase tracking-widest text-xs mb-6"
+                        >
+                            founders
+                        </p>
+
+                        <div class="mb-8">
+                            <p
+                                class="vtrim lowercase font-medium text-white mb-1"
+                                style="font-size: clamp(1rem, 1.8vw, 1.5rem)"
+                            >
+                                dominic callinan
+                            </p>
+                            <p class="text-white/50 text-sm leading-relaxed">
+                                leads client partnerships and strategy.
+                            </p>
+                            <a
+                                href="mailto:dom@graftai.com.au"
+                                class="text-agreen/70 hover:text-agreen text-sm transition-colors duration-300"
+                                >dom@graftai.com.au</a
+                            >
+                        </div>
+
+                        <div class="mb-12">
+                            <p
+                                class="vtrim lowercase font-medium text-white mb-1"
+                                style="font-size: clamp(1rem, 1.8vw, 1.5rem)"
+                            >
+                                max carter
+                            </p>
+                            <p class="text-white/50 text-sm leading-relaxed">
+                                leads engineering and ai development.
+                            </p>
+                            <a
+                                href="mailto:max@undivisible.dev"
+                                class="text-agreen/70 hover:text-agreen text-sm transition-colors duration-300"
+                                >max@undivisible.dev</a
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <a
+                            href="mailto:imhere@atechnology.company"
+                            class="text-white/40 hover:text-white text-sm transition-colors duration-300 block mb-6"
+                            >imhere@atechnology.company</a
+                        >
+                        <div class="flex flex-col gap-1">
+                            <a
+                                href="https://github.com/atechnology-company"
+                                target="_blank"
+                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
+                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
+                                >github.com/atechnology-company</a
+                            >
+                            <a
+                                href="https://instagram.com/atechnologycompany"
+                                target="_blank"
+                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
+                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
+                                >instagram.com/atechnologycompany</a
+                            >
+                            <a
+                                href="https://x.com/atechnologyco"
+                                target="_blank"
+                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
+                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
+                                >x.com/atechnologyco</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function app() {
+                return {
+                    mx: 0,
+                    my: 0,
+                    activeThing: null,
+                    aboutOpen: false,
+                    transitioning: false,
+
+                    thingKeys: [
+                        "atmosphere",
+                        "subspace",
+                        "soliloquy",
+                        "plates",
+                        "rover",
+                        "graft",
+                        "pava",
+                    ],
+
+                    things: {
+                        atmosphere: {
+                            desc: "an ecosystem for every device. atmosphere gives every device apple native-level handoffs, clipboard and file sharing without lockins.",
+                            stack: ["swift", "rust", "beta"],
+                            links: [
+                                {
+                                    label: "github (private)",
+                                    url: "https://github.com/atechnology-company/atmosphere",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=A",
+                        },
+                        subspace: {
+                            desc: "the ai memory bank. subspace is a text editor, document editor, code editor, all things text and has an mcp so that your profile syncs across any service. subspace also has a blurt mode with voice input to sort your memories into the appropriate sections in your database.",
+                            stack: ["react native", "supabase"],
+                            links: [
+                                {
+                                    label: "github (private)",
+                                    url: "https://github.com/atechnology-company/subspace",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=S",
+                        },
+                        soliloquy: {
+                            desc: "the web and ai native operating system of the future. built on zircon translated to vlang and rover.",
+                            stack: ["vlang", "rust", "c++", "svelte"],
+                            links: [
+                                {
+                                    label: "github (private)",
+                                    url: "https://github.com/atechnology-company/soliloquy",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=SQ",
+                        },
+                        plates: {
+                            desc: "the personal ai assistant and the culmination of all of our software. plates keeps you in touch of whats important and serves as our design philosophy oi! (operation on intention). plates is on every device, every platform, connects to subspace and atmosphere and acts as your interface into the digital world.",
+                            stack: ["swift", "rust", "svelte"],
+                            links: [
+                                {
+                                    label: "github (private)",
+                                    url: "https://github.com/atechnology-company/plates",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=P",
+                        },
+                        rover: {
+                            desc: "a browser rebuilt for today. with servo and rusty v8.",
+                            stack: ["rust", "c++"],
+                            links: [
+                                {
+                                    label: "github (private)",
+                                    url: "https://github.com/atechnology-company/river",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=R",
+                        },
+                        graft: {
+                            desc: "an ai sales agent that handles customer conversion, social media, support and telephony. graft works so you don't have to.",
+                            stack: ["svelte", "zig", "rust"],
+                            links: [
+                                {
+                                    label: "website",
+                                    url: "https://graftai.com.au",
+                                },
+                            ],
+                            logo: "https://placehold.co/400x400/111/333?text=G",
+                        },
+                        pava: {
+                            desc: "the completely automated digital marketing agency, pava automated ideation, crossposting and scheduling, while giving you advanced analytics on all your platforms to formulate into future ideas.",
+                            stack: ["nextjs", "supabase", "rust", "beta"],
+                            links: [],
+                            logo: "https://placehold.co/400x400/111/333?text=PV",
+                        },
+                    },
+
+                    get currentData() {
+                        return this.activeThing
+                            ? this.things[this.activeThing]
+                            : null;
+                    },
+
+                    colorForText(text) {
+                        let hash = 0;
+                        for (let i = 0; i < text.length; i++) {
+                            hash = text.charCodeAt(i) + ((hash << 5) - hash);
+                        }
+                        const c = (hash & 0x00ffffff)
+                            .toString(16)
+                            .toUpperCase();
+                        return "#" + "00000".substring(0, 6 - c.length) + c;
+                    },
+
+                    glow(e) {
+                        this.mx = e.clientX;
+                        this.my = e.clientY;
+                    },
+
+                    toggleThing(key) {
+                        if (this.aboutOpen) this.aboutOpen = false;
+
+                        if (this.activeThing && this.activeThing !== key) {
+                            this.transitioning = true;
+                            setTimeout(() => {
+                                this.activeThing = key;
+                                setTimeout(() => {
+                                    this.transitioning = false;
+                                }, 50);
+                            }, 500);
+                        } else {
+                            this.activeThing =
+                                this.activeThing === key ? null : key;
+                        }
+                    },
+
+                    closeThing() {
+                        this.activeThing = null;
+                    },
+
+                    toggleAbout() {
+                        if (this.activeThing) this.activeThing = null;
+                        this.aboutOpen = !this.aboutOpen;
+                    },
+
+                    closeAll() {
+                        this.activeThing = null;
+                        this.aboutOpen = false;
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>
