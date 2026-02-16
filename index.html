@@ -289,8 +289,8 @@
 
         <!-- ═══ THING OVERLAY ═══ -->
         <div
-            class="fixed inset-0 bg-black z-40 transition-opacity duration-500"
-            :class="activeThing ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+            class="fixed inset-0 bg-black z-40 transition-opacity duration-500 opacity-0 pointer-events-none"
+            :class="activeThing ? '!opacity-100 !pointer-events-auto' : '!opacity-0 !pointer-events-none'"
         >
             <div
                 class="thing-overlay-inner p-5 relative transition-all duration-500"
@@ -367,9 +367,9 @@
 
         <!-- ═══ ABOUT OVERLAY ═══ -->
         <div
-            class="fixed inset-0 bg-black z-60 transition-opacity duration-500"
+            class="fixed inset-0 bg-black transition-opacity duration-500 opacity-0 pointer-events-none"
             style="z-index: 60"
-            :class="aboutOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+            :class="aboutOpen ? '!opacity-100 !pointer-events-auto' : '!opacity-0 !pointer-events-none'"
         >
             <div
                 class="p-5 relative overflow-y-auto transition-all duration-500"
