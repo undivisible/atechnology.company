@@ -208,9 +208,11 @@
         <div class="cursor-glow" :style="`left:${mx}px;top:${my}px`"></div>
 
         <!-- ═══ MAIN ═══ -->
-        <main class="relative w-full p-5 desktop-layout transition-opacity duration-500" style="height: 100vh; height: 100dvh;" :style="activeThing ? 'opacity: 0' : 'opacity: 1'">
+        <main class="relative w-full p-5 desktop-layout" style="height: 100vh; height: 100dvh;">
             <!-- blurb -->
             <p
+                x-show="!activeThing"
+                x-transition.opacity.duration.300ms
                 class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5"
                 style="
                     font-size: clamp(1rem, 2.8vw, 3.4rem);
@@ -252,6 +254,8 @@
 
             <!-- hero -->
             <div
+                x-show="!activeThing"
+                x-transition.opacity.duration.300ms
                 class="hero-title absolute bottom-[4%] left-0 px-5 anim-rise opacity-0"
                 style="animation-delay: 0.4s"
             >
