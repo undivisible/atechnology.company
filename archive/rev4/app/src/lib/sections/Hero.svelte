@@ -92,7 +92,7 @@
   const bionicBlurb = blurb.map((w) => ({ ...w, parts: splitParts(w.text) }));
 </script>
 
-<section bind:this={heroSection} class="flex items-center justify-center min-h-screen w-full bg-black" data-node="35:489" aria-label="Hero">
+<section bind:this={heroSection} class="flex items-center justify-center min-h-[100dvh] w-full bg-black" data-node="35:489" aria-label="Hero">
   <div class="hero-left relative max-w-[50vw] px-[clamp(2rem,4vw,6rem)] py-[clamp(2rem,4vw,6rem)]">
     <h1 bind:this={headingEl}
       class="tracking-tight text-[clamp(3rem,8vw,6.25rem)] leading-[0.85] font-bold will-change-transform z-[300] pointer-events-none origin-top-left"
@@ -154,7 +154,7 @@
     display: flex;
     align-items: center;
     justify-content: center; /* Center horizontally */
-    min-height: 100vh;
+    min-height: 100dvh;
     padding: 0;
   }
   .hero-left {
@@ -182,10 +182,10 @@
   .bionic-rest { font-weight: 500; }
   .hero-right-blurb .bionic-first, .hero-right-blurb .bionic-rest { display: inline; }
 
-  @media (max-width: 640px) {
+  @media (max-width: 900px) {
     section[aria-label="Hero"] { flex-direction: column; align-items: flex-start; padding-top: 2rem; padding-bottom: 2rem; }
     .hero-left { max-width: 100%; padding: 1.25rem; }
-    .hero-right-blurb { width: 100% !important; margin-left: 0 !important; text-align: left !important; margin-top: 1rem; max-width: none; padding-left: 1.25rem; padding-right: 1.25rem; }
+    .hero-right-blurb { width: 100% !important; margin-left: 0 !important; text-align: left !important; margin-top: 1rem; max-width: none; padding-left: 1rem; padding-right: 1rem; }
     h1 {
       font-size: clamp(2rem, 9vw, 3.25rem) !important;
       line-height: 1.05 !important;
