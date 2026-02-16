@@ -331,7 +331,7 @@
                 <div
                     class="thing-links absolute left-5 bottom-5"
                     x-show="activeThing && currentData?.links?.length > 0"
-                    x-transition
+                    x-transition.opacity.duration.500ms
                 >
                     <div class="flex flex-wrap gap-8">
                         <template
