@@ -208,7 +208,7 @@
         <div class="cursor-glow" :style="`left:${mx}px;top:${my}px`"></div>
 
         <!-- ═══ MAIN ═══ -->
-        <main class="relative w-full p-5 desktop-layout" style="height: 100vh; height: 100dvh;">
+        <main class="relative w-full p-5 desktop-layout transition-opacity duration-500" style="height: 100vh; height: 100dvh;" :style="activeThing ? 'opacity: 0' : 'opacity: 1'">
             <!-- blurb -->
             <p
                 class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5"
@@ -491,7 +491,7 @@
                             stack: ["swift", "rust", "beta"],
                             links: [
                                 {
-                                    label: "github (private)",
+                                    label: "github.com/atechnology-company/atmosphere",
                                     url: "https://github.com/atechnology-company/atmosphere",
                                 },
                             ],
@@ -502,7 +502,7 @@
                             stack: ["react native", "supabase"],
                             links: [
                                 {
-                                    label: "github (private)",
+                                    label: "github.com/atechnology-company/subspace",
                                     url: "https://github.com/atechnology-company/subspace",
                                 },
                             ],
@@ -513,7 +513,7 @@
                             stack: ["vlang", "rust", "c++", "svelte"],
                             links: [
                                 {
-                                    label: "github (private)",
+                                    label: "github.com/atechnology-company/soliloquy",
                                     url: "https://github.com/atechnology-company/soliloquy",
                                 },
                             ],
@@ -524,7 +524,7 @@
                             stack: ["swift", "rust", "svelte"],
                             links: [
                                 {
-                                    label: "github (private)",
+                                    label: "github.com/atechnology-company/plates",
                                     url: "https://github.com/atechnology-company/plates",
                                 },
                             ],
@@ -535,7 +535,7 @@
                             stack: ["rust", "c++"],
                             links: [
                                 {
-                                    label: "github (private)",
+                                    label: "github.com/atechnology-company/river",
                                     url: "https://github.com/atechnology-company/river",
                                 },
                             ],
@@ -546,7 +546,7 @@
                             stack: ["svelte", "zig", "rust"],
                             links: [
                                 {
-                                    label: "website",
+                                    label: "graftai.com.au",
                                     url: "https://graftai.com.au",
                                 },
                             ],
@@ -557,7 +557,7 @@
                             stack: ["nextjs", "supabase", "rust", "beta"],
                             links: [
                                 {
-                                    label: "website",
+                                    label: "pava.studio",
                                     url: "https://pava.studio",
                                 },
                             ],
