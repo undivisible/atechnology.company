@@ -78,6 +78,59 @@
                 line-height: 1;
             }
 
+            /* Mobile layout — vertical flow */
+            @media (max-width: 768px) {
+                /* Homepage */
+                main.desktop-layout {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: space-between !important;
+                    padding: 20px !important;
+                    overflow-y: auto !important;
+                }
+                main.desktop-layout > * {
+                    position: static !important;
+                    padding: 0 !important;
+                }
+                main.desktop-layout .nav-stack {
+                    order: 1;
+                    align-items: flex-start !important;
+                    margin-bottom: 0.5rem;
+                }
+                main.desktop-layout .blurb {
+                    order: 2;
+                    max-width: 100% !important;
+                    margin-bottom: auto;
+                }
+                main.desktop-layout .hero-title {
+                    order: 3;
+                }
+                main.desktop-layout .hero-title h1 {
+                    font-size: clamp(2.5rem, 11vw, 5rem) !important;
+                }
+                main.desktop-layout .about-btn {
+                    order: 4;
+                    text-align: left;
+                }
+
+                /* Product overlay */
+                .thing-overlay-inner {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: space-between !important;
+                    overflow-y: auto !important;
+                }
+                .thing-overlay-inner > * {
+                    position: static !important;
+                    max-width: 100% !important;
+                }
+
+                /* About overlay */
+                .about-overlay-inner {
+                    overflow-y: auto !important;
+                }
+            }
+
             @keyframes riseUp {
                 from {
                     opacity: 0;
@@ -130,10 +183,10 @@
         <div class="cursor-glow" :style="`left:${mx}px;top:${my}px`"></div>
 
         <!-- ═══ MAIN ═══ -->
-        <main class="relative w-full h-screen p-5">
+        <main class="relative w-full h-screen p-5 desktop-layout">
             <!-- blurb -->
             <p
-                class="vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5"
+                class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5"
                 style="
                     font-size: clamp(1rem, 2.8vw, 3.4rem);
                     line-height: 80%;
@@ -174,7 +227,7 @@
 
             <!-- hero -->
             <div
-                class="absolute bottom-[4%] left-0 px-5 anim-rise opacity-0"
+                class="hero-title absolute bottom-[4%] left-0 px-5 anim-rise opacity-0"
                 style="animation-delay: 0.4s"
             >
                 <h1
@@ -191,7 +244,7 @@
 
             <!-- about button — always on top -->
             <div
-                class="absolute bottom-5 right-5 anim-fade opacity-0"
+                class="about-btn absolute bottom-5 right-5 anim-fade opacity-0"
                 style="animation-delay: 1.3s; z-index: 70"
             >
                 <div
@@ -214,7 +267,7 @@
             :class="activeThing ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
         >
             <div
-                class="p-5 h-screen relative transition-all duration-500"
+                class="thing-overlay-inner p-5 h-screen relative transition-all duration-500"
                 :class="(activeThing && !transitioning) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
             >
                 <!-- desc + stack -->
