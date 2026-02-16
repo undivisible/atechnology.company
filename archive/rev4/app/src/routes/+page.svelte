@@ -191,11 +191,11 @@
 	</div>
 {/if}
 
-<main bind:this={mainEl} class="h-[100dvh] w-screen overflow-y-auto snap-y snap-mandatory">
-	<div class="panel snap-start min-h-[100dvh] min-w-screen w-screen">
+<main bind:this={mainEl} class="h-screen w-screen overflow-y-auto snap-y snap-mandatory">
+	<div class="panel snap-start min-h-screen min-w-screen w-screen">
 		<Hero />
 	</div>
 	{#each products as p}
-		<Product {...p} class="snap-start min-h-[100dvh] min-w-screen w-screen" />
+		<Product {...p} class="snap-start min-h-screen min-w-screen w-screen" />
 	{/each}
 </main>

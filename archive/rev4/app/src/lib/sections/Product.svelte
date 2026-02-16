@@ -14,7 +14,7 @@
 <section
 	{...$$restProps}
 	{id}
-	class="panel product {bgClass} min-w-screen box-border min-h-[100dvh] w-screen snap-start bg-black text-white"
+	class="panel product {bgClass} min-w-screen box-border min-h-screen w-screen snap-start bg-black text-white"
 	aria-labelledby={id + '-title'}
 	use:fadeIn
 >
@@ -59,7 +59,7 @@
 		justify-content: center;
 		padding: clamp(2rem, 4vw, 4rem);
 		gap: 2rem;
-		min-height: 100dvh;
+		min-height: 100vh;
 		min-width: 100vw;
 		box-sizing: border-box;
 	}
