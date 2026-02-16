@@ -211,9 +211,8 @@
         <main class="relative w-full p-5 desktop-layout" style="height: 100vh; height: 100dvh;">
             <!-- blurb -->
             <p
-                x-show="!activeThing"
-                x-transition.opacity.duration.300ms
-                class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5"
+                class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5 transition-all duration-300"
+                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
                 style="
                     font-size: clamp(1rem, 2.8vw, 3.4rem);
                     line-height: 80%;
@@ -243,9 +242,9 @@
                 <!-- product items -->
                 <template x-for="(key, i) in thingKeys" :key="key">
                     <div
-                        class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300 anim-slide opacity-0"
+                        class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300 anim-slide"
                         :style="`font-size: clamp(1.5rem, 3.8vw, 4.5rem); --end-op: 0.5; animation-delay: ${0.6 + i * 0.1}s`"
-                        :class="activeThing === key ? '!opacity-100 text-white' : 'opacity-50 text-white/50 hover:opacity-100 hover:text-white'"
+                        :class="activeThing === key ? '!opacity-100 text-white' : 'text-white/50 hover:opacity-100 hover:text-white'"
                         @click="toggleThing(key)"
                         x-text="key"
                     ></div>
@@ -254,9 +253,8 @@
 
             <!-- hero -->
             <div
-                x-show="!activeThing"
-                x-transition.opacity.duration.300ms
-                class="hero-title absolute bottom-[4%] left-0 px-5 anim-rise opacity-0"
+                class="hero-title absolute bottom-[4%] left-0 px-5 anim-rise opacity-0 transition-all duration-300"
+                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
                 style="animation-delay: 0.4s"
             >
                 <h1
@@ -273,9 +271,9 @@
 
             <!-- about button — always on top -->
             <div
-                class="about-btn absolute bottom-5 right-5 anim-fade opacity-0"
+                class="about-btn absolute bottom-5 right-5 anim-fade opacity-0 transition-all duration-300"
                 style="animation-delay: 1.3s; z-index: 70"
-                x-show="!activeThing"
+                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
             >
                 <div
                     class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300"
