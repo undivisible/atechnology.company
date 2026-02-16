@@ -319,8 +319,8 @@
                             :key="tech"
                         >
                             <span
-                                class="border text-xs font-medium uppercase tracking-widest px-4 py-2 inline-block rounded-full"
-                                :style="`color: ${colorForText(tech)}; border-color: ${colorForText(tech)}4d`"
+                                class="text-xs font-medium uppercase tracking-widest inline-block"
+                                :style="`color: ${colorForText(tech)}`"
                                 x-text="tech"
                             ></span>
                         </template>
@@ -555,7 +555,12 @@
                         pava: {
                             desc: "the completely automated digital marketing agency, pava automated ideation, crossposting and scheduling, while giving you advanced analytics on all your platforms to formulate into future ideas.",
                             stack: ["nextjs", "supabase", "rust", "beta"],
-                            links: [],
+                            links: [
+                                {
+                                    label: "website",
+                                    url: "https://pava.studio",
+                                },
+                            ],
                             logo: "https://placehold.co/400x400/111/333?text=PV",
                         },
                     },
