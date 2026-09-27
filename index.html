@@ -3,623 +3,889 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="description" content="atechnology company makes useful things with design, intention and efficiency." />
+        <meta name="theme-color" content="#efeee8" />
+        <link rel="icon" href="data:," />
         <title>atechnology company</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
         <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            instrument: ['"Instrument Sans"', "sans-serif"],
-                        },
-                        colors: { agreen: "#00893B" },
-                    },
-                },
-            };
+            (() => {
+                document.documentElement.classList.add("js");
+                const key = "atechnology-theme";
+                let theme;
+                try { theme = localStorage.getItem(key); } catch (_) {}
+                if (theme !== "light" && theme !== "dark") {
+                    theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                }
+                document.documentElement.dataset.theme = theme;
+                document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#11110f" : "#efeee8";
+            })();
         </script>
         <style>
-            * {
+            :root {
+                --paper: #efeee8;
+                --ink: #11110f;
+                --green: #bdff00;
+                --soft-ink: #55554e;
+                --hairline: rgba(17, 17, 15, 0.22);
+                --company-hairline: rgba(239, 238, 232, 0.38);
+                --company-accent: #bdff00;
+                --pad: clamp(1rem, 2.4vw, 3.5rem);
+                color-scheme: light;
+            }
+
+            :root[data-theme="dark"] {
+                --paper: #11110f;
+                --ink: #efeee8;
+                --soft-ink: #b8b7af;
+                --hairline: rgba(239, 238, 232, 0.3);
+                --company-hairline: rgba(17, 17, 15, 0.32);
+                --company-accent: #4b6200;
+                color-scheme: dark;
+            }
+
+            * { box-sizing: border-box; }
+
+            html {
+                overflow-x: hidden;
+                background: var(--paper);
+            }
+
+            body {
+                min-width: 320px;
+                margin: 0;
+                overflow-x: hidden;
+                color: var(--ink);
+                background: var(--paper);
+                font-family: "Helvetica Neue", Helvetica, sans-serif;
+                font-weight: 500;
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+            }
+
+            a { color: inherit; }
+
+            button,
+            summary { font: inherit; }
+
+            button,
+            summary,
+            a { -webkit-tap-highlight-color: transparent; }
+
+            :focus-visible {
+                outline: 3px solid var(--green);
+                outline-offset: 3px;
+            }
+
+            .skip-link {
+                position: fixed;
+                z-index: 10;
+                top: 1rem;
+                left: 1rem;
+                padding: 0.75rem 1rem;
+                color: #11110f;
+                background: var(--green);
+                transform: translateY(-200%);
+            }
+
+            .skip-link:focus { transform: translateY(0); }
+
+            .site-header,
+            .content-shell,
+            .site-footer {
+                width: min(100%, 1920px);
+                margin: 0 auto;
+                padding-right: var(--pad);
+                padding-left: var(--pad);
+            }
+
+            .site-header {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto auto;
+                gap: 1rem;
+                align-items: start;
+                padding-top: 1rem;
+            }
+
+            .brand,
+            .folio,
+            .kicker,
+            .project-number,
+            .project-stack,
+            .company-number,
+            .footer-meta {
+                font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.045em;
+                line-height: 1.25;
+                text-transform: uppercase;
+            }
+
+            .brand,
+            .folio { margin: 0; }
+
+            .folio { color: var(--soft-ink); text-align: right; }
+
+            .theme-toggle {
+                min-width: 6.7rem;
+                padding: 0.45rem 0.55rem;
+                color: var(--ink);
+                border: 1px solid var(--ink);
+                border-radius: 0;
+                background: transparent;
+                cursor: pointer;
+                font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.045em;
+                line-height: 1.25;
+                text-align: left;
+                text-transform: uppercase;
+                transition: color 160ms ease, background 160ms ease;
+            }
+
+            .theme-toggle:hover,
+            .theme-toggle:focus-visible {
+                color: #11110f;
+                background: var(--green);
+            }
+
+            .masthead {
+                padding-top: clamp(3.5rem, 8vw, 10rem);
+                padding-bottom: clamp(3rem, 6vw, 7rem);
+            }
+
+            .masthead-title {
+                max-width: 14ch;
+                margin: 0;
+                font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+                font-size: clamp(4.4rem, 14.4vw, 20rem);
+                font-weight: 400;
+                line-height: 0.9;
+                letter-spacing: -0.025em;
+                text-transform: lowercase;
+            }
+
+            .masthead-title span { display: block; }
+
+            .masthead-title .company {
+                width: fit-content;
+                margin-left: clamp(1.1rem, 11vw, 13rem);
+                color: var(--paper);
+                letter-spacing: 0;
+                -webkit-text-stroke: clamp(1px, 0.12vw, 3px) var(--ink);
+            }
+
+            .landscape-study {
+                display: grid;
+                grid-template-columns: minmax(0, 1.55fr) minmax(11rem, 0.45fr);
+                gap: 1px;
+                margin-bottom: clamp(4.5rem, 11vw, 13rem);
+                overflow: hidden;
+                color: var(--paper);
+                background: var(--ink);
+            }
+
+            .landscape-main,
+            .landscape-detail {
+                position: relative;
+                min-height: clamp(22rem, 51vw, 54rem);
+                overflow: hidden;
+                background: #74736d;
+            }
+
+            .landscape-main img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 48% 55%;
+                filter: grayscale(1) contrast(1.07);
+                transform: scale(1.035);
+                transition: transform 1.6s cubic-bezier(.2, .8, .2, 1);
+            }
+
+            .landscape-study.is-visible .landscape-main img { transform: scale(1); }
+
+            .landscape-detail {
+                background-image: url("assets/landscape.webp");
+                background-position: 9% 72%;
+                background-size: auto 200%;
+                background-repeat: no-repeat;
+                filter: grayscale(1) contrast(1.15);
+            }
+
+            .landscape-detail::after {
+                position: absolute;
+                inset: 0;
+                content: "";
+                background: linear-gradient(180deg, rgba(17, 17, 15, 0.08), rgba(17, 17, 15, 0.42));
+            }
+
+            .landscape-caption {
+                position: absolute;
+                z-index: 1;
+                right: 1rem;
+                bottom: 0.9rem;
+                left: 1rem;
+                margin: 0;
+                color: #efeee8;
+            }
+
+            .landscape-caption span { display: block; }
+
+            .landscape-caption span:last-child {
+                margin-top: 0.35rem;
+                font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.045em;
+                line-height: 1.25;
+                text-transform: uppercase;
+            }
+
+            .intro-grid {
+                display: grid;
+                grid-template-columns: minmax(9rem, 0.62fr) minmax(16rem, 1.38fr);
+                gap: clamp(1.5rem, 5vw, 7rem);
+                align-items: start;
+                padding-bottom: clamp(4rem, 9vw, 11rem);
+                border-top: 1px solid var(--ink);
+            }
+
+            .intro-grid .kicker { padding-top: 0.75rem; }
+
+            .introduction {
+                max-width: 31ch;
+                margin: 0;
+                padding-top: clamp(2rem, 4vw, 4.5rem);
+                font-size: clamp(1.7rem, 3.7vw, 5.4rem);
+                line-height: 0.91;
+                letter-spacing: -0.065em;
+            }
+
+            .highlight {
+                padding: 0.02em 0.075em 0.08em;
+                color: #11110f;
+                background: var(--green);
+            }
+
+            .project-section { border-top: 1px solid var(--ink); }
+
+            .section-heading {
+                display: grid;
+                grid-template-columns: minmax(9rem, 0.62fr) minmax(16rem, 1.38fr);
+                gap: clamp(1.5rem, 5vw, 7rem);
+                padding: 0.75rem 0 clamp(2rem, 4vw, 4rem);
+            }
+
+            .section-heading h2,
+            .company-header h2,
+            .about-header h2 {
+                max-width: 12ch;
+                margin: 0;
+                font-size: clamp(1.5rem, 2.6vw, 3.6rem);
+                font-weight: 500;
+                line-height: 0.94;
+                letter-spacing: -0.06em;
+            }
+
+            .project-index {
                 margin: 0;
                 padding: 0;
-                box-sizing: border-box;
-            }
-            body {
-                overflow: hidden;
-                height: 100vh;
-                height: 100dvh;
-            }
-            .vtrim {
-                leading-trim: both;
-                text-edge: cap;
-                -webkit-leading-trim: both;
-                -webkit-text-edge: cap;
+                list-style: none;
+                border-top: 1px solid var(--hairline);
             }
 
-            .grain {
-                position: fixed;
-                inset: 0;
-                pointer-events: none;
-                z-index: 100;
-                opacity: 0.03;
-                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            .project-item { border-bottom: 1px solid var(--hairline); }
+
+            .project-toggle {
+                position: relative;
+                display: grid;
+                grid-template-columns: minmax(3.5rem, 0.18fr) minmax(0, 1fr) auto;
+                gap: 1rem;
+                align-items: baseline;
+                padding: clamp(0.95rem, 1.6vw, 1.75rem) 0;
+                cursor: pointer;
+                list-style: none;
             }
 
-            .cursor-glow {
-                position: fixed;
-                width: 500px;
-                height: 500px;
+            .project-toggle::-webkit-details-marker { display: none; }
+
+            .project-number { color: var(--soft-ink); }
+
+            .project-name {
+                font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+                font-size: clamp(3.2rem, 7.7vw, 10rem);
+                font-weight: 400;
+                line-height: 0.72;
+                letter-spacing: -0.055em;
+                text-transform: lowercase;
+            }
+
+            .project-name--long { letter-spacing: -0.07em; }
+
+            :root[data-theme="dark"] .project-name {
+                color: var(--paper);
+                -webkit-text-stroke: clamp(1px, 0.08vw, 2px) var(--ink);
+            }
+
+            .project-status {
+                width: 1.45rem;
+                height: 1.45rem;
+                border: 1px solid var(--ink);
                 border-radius: 50%;
-                background: radial-gradient(
-                    circle,
-                    rgba(0, 137, 59, 0.04) 0%,
-                    transparent 70%
-                );
-                pointer-events: none;
-                z-index: 1;
-                transform: translate(-50%, -50%);
-                transition:
-                    left 0.15s ease-out,
-                    top 0.15s ease-out;
+                transform: translateY(-0.08em);
+                transition: background 160ms ease;
             }
 
-            .nav-stack {
+            .project-item details[open] .project-status { background: var(--green); }
+
+            .project-toggle:hover .project-name,
+            .project-toggle:focus-visible .project-name { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 0.08em; text-underline-offset: 0.07em; }
+
+            .project-detail {
+                display: grid;
+                grid-template-columns: minmax(3.5rem, 0.18fr) minmax(0, 1fr);
+                gap: 1rem;
+                padding: 0 0 clamp(1.5rem, 3.5vw, 4rem);
+            }
+
+            .project-detail::before {
+                content: "↳";
+                color: var(--soft-ink);
+                font-size: 1.2rem;
+            }
+
+            .project-content { max-width: 66rem; }
+
+            .project-description {
+                max-width: 38ch;
+                margin: 0;
+                font-size: clamp(1.15rem, 2.1vw, 2.8rem);
+                line-height: 1.02;
+                letter-spacing: -0.045em;
+            }
+
+            .project-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem 1.5rem;
+                align-items: baseline;
+                margin-top: clamp(1.5rem, 3vw, 3rem);
+            }
+
+            .project-stack {
+                margin: 0;
+                color: var(--soft-ink);
+            }
+
+            .project-link {
+                color: var(--ink);
+                font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+                font-weight: 600;
+                text-decoration-color: var(--green);
+                text-decoration-thickness: 0.18em;
+                text-underline-offset: 0.15em;
+            }
+
+            .project-link:hover,
+            .project-link:focus-visible { background: var(--green); color: #11110f; }
+
+            .project-item details[open] .project-detail { animation: detail-in 260ms cubic-bezier(.2, .8, .2, 1) both; }
+
+            .timeline-section {
+                padding-top: clamp(4.5rem, 11vw, 13rem);
+                padding-bottom: clamp(4.5rem, 11vw, 13rem);
+                border-top: 1px solid var(--ink);
+            }
+
+            .timeline-list {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                border-top: 1px solid var(--hairline);
+            }
+
+            .timeline-item {
+                display: grid;
+                grid-template-columns: minmax(7rem, 0.3fr) minmax(0, 1fr) minmax(7rem, 0.25fr);
+                gap: 1rem;
+                align-items: start;
+                padding: clamp(1rem, 2vw, 2rem) 0;
+                border-bottom: 1px solid var(--hairline);
+            }
+
+            .timeline-date,
+            .source-link {
+                font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.045em;
+                line-height: 1.3;
+                text-transform: uppercase;
+            }
+
+            .timeline-date { color: var(--soft-ink); }
+
+            .timeline-entry {
+                max-width: 38ch;
+                margin: 0;
+                font-size: clamp(1.1rem, 1.65vw, 1.7rem);
+                line-height: 1.02;
+                letter-spacing: -0.04em;
+            }
+
+            .timeline-sources {
                 display: flex;
                 flex-direction: column;
-                align-items: flex-end;
-                gap: 0;
-            }
-            .nav-stack > div {
-                line-height: 1;
+                gap: 0.35rem;
+                align-items: flex-start;
             }
 
-            /* Mobile layout */
-            @media (max-width: 768px) {
-                /* Homepage: flex column, blurb directly above hero title */
-                main.desktop-layout {
-                    display: flex !important;
-                    flex-direction: column !important;
-                    padding: 20px !important;
-                    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)) !important;
-                    overflow-y: auto !important;
-                }
-                main.desktop-layout > * {
-                    position: static !important;
-                    padding: 0 !important;
-                }
-                /* 1. nav at top */
-                main.desktop-layout .nav-stack {
-                    order: 1;
-                    align-items: flex-start !important;
-                }
-                /* 2. spacer pushes content down */
-                main.desktop-layout .blurb {
-                    order: 2;
-                    max-width: 100% !important;
-                    margin-top: auto;
-                    margin-bottom: 1rem;
-                    font-size: clamp(0.9rem, 3.5vw, 1.4rem) !important;
-                }
-                /* 3. hero title */
-                main.desktop-layout .hero-title {
-                    order: 3;
-                }
-                main.desktop-layout .hero-title h1 {
-                    font-size: clamp(2.5rem, 13vw, 5rem) !important;
-                    line-height: 55% !important;
-                }
-                /* 4. about button bottom-left */
-                main.desktop-layout .about-btn {
-                    order: 4;
-                    text-align: left;
-                    margin-top: 1rem;
-                    padding-bottom: env(safe-area-inset-bottom, 0px);
-                }
-                main.desktop-layout .about-btn > div {
-                    font-size: clamp(1.2rem, 5vw, 2rem) !important;
-                }
-
-                /* Nav items smaller on mobile — override inline styles */
-                .nav-stack > div,
-                .nav-stack > :not(template) {
-                    font-size: clamp(1.2rem, 5vw, 2rem) !important;
-                }
-
-                /* Product overlay: vertical flow, desc+stack at bottom */
-                .thing-overlay-inner {
-                    display: flex !important;
-                    flex-direction: column !important;
-                    overflow-y: auto !important;
-                }
-                .thing-overlay-inner > .thing-desc {
-                    position: static !important;
-                    max-width: 100% !important;
-                    margin-top: auto;
-                    order: 2;
-                }
-                .thing-overlay-inner > .thing-desc p {
-                    font-size: clamp(0.9rem, 3.5vw, 1.4rem) !important;
-                    margin-bottom: 1rem !important;
-                }
-                .thing-overlay-inner > .thing-links {
-                    position: static !important;
-                    order: 3;
-                    margin-top: 1rem;
-                }
+            .source-link {
+                color: var(--ink);
+                text-decoration-color: var(--green);
+                text-decoration-thickness: 0.18em;
+                text-underline-offset: 0.16em;
             }
 
-            @keyframes riseUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            .source-link:hover,
+            .source-link:focus-visible { background: var(--green); color: #11110f; }
+
+            .timeline-note {
+                max-width: 44ch;
+                margin: clamp(1.5rem, 3vw, 3rem) 0 0 auto;
+                color: var(--soft-ink);
+                font-size: clamp(0.98rem, 1.2vw, 1.15rem);
+                line-height: 1.3;
             }
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateX(20px);
-                }
-                to {
-                    opacity: var(--end-op, 0.5);
-                    transform: translateX(0);
-                }
+
+            .company-section {
+                margin-top: clamp(4.5rem, 12vw, 15rem);
+                padding-bottom: clamp(4.5rem, 10vw, 12rem);
+                color: var(--paper);
+                background: var(--ink);
             }
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                }
+
+            .company-shell {
+                width: min(100%, 1920px);
+                margin: 0 auto;
+                padding: var(--pad);
             }
-            .anim-rise {
+
+            .company-header {
+                display: grid;
+                grid-template-columns: minmax(9rem, 0.62fr) minmax(16rem, 1.38fr);
+                gap: clamp(1.5rem, 5vw, 7rem);
+                padding-bottom: clamp(3rem, 7vw, 7rem);
+            }
+
+            .company-header .kicker { color: var(--company-accent); }
+
+            .company-header h2 { max-width: 18ch; }
+
+            .company-note {
+                max-width: 42ch;
+                margin: 1.25rem 0 0;
+                color: var(--paper);
+                opacity: 0.8;
+                font-size: clamp(1rem, 1.55vw, 1.45rem);
+                line-height: 1.1;
+                letter-spacing: -0.035em;
+            }
+
+            .company-list { border-top: 1px solid var(--company-hairline); }
+
+            .company-row {
+                display: grid;
+                grid-template-columns: minmax(3.5rem, 0.18fr) minmax(0, 1fr) auto;
+                gap: 1rem;
+                align-items: baseline;
+                padding: clamp(1.1rem, 2vw, 2.25rem) 0;
+                border-bottom: 1px solid var(--company-hairline);
+                text-decoration: none;
+            }
+
+            .company-number { color: var(--company-accent); }
+
+            .company-label {
+                font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+                font-size: clamp(2.7rem, 7.4vw, 9.5rem);
+                font-weight: 400;
+                line-height: 0.76;
+                letter-spacing: -0.05em;
+                text-transform: lowercase;
+            }
+
+            .company-arrow {
+                color: var(--company-accent);
+                font-size: clamp(1.5rem, 3vw, 3rem);
+                transition: transform 160ms ease;
+            }
+
+            .company-row:hover .company-label,
+            .company-row:focus-visible .company-label { color: var(--company-accent); }
+
+            .company-row:hover .company-arrow,
+            .company-row:focus-visible .company-arrow { transform: translate(0.15em, -0.15em); }
+
+            .about-section {
+                padding-top: clamp(4.5rem, 10vw, 12rem);
+                padding-bottom: clamp(4.5rem, 10vw, 12rem);
+            }
+
+            .about-header {
+                display: grid;
+                grid-template-columns: minmax(9rem, 0.62fr) minmax(16rem, 1.38fr);
+                gap: clamp(1.5rem, 5vw, 7rem);
+                padding-bottom: clamp(3rem, 6vw, 7rem);
+                border-bottom: 1px solid var(--ink);
+            }
+
+            .about-header h2 { max-width: 17ch; }
+
+            .email-link {
+                display: inline-block;
+                margin-top: 1.25rem;
+                color: var(--ink);
+                font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+                font-weight: 600;
+                text-decoration-color: var(--green);
+                text-decoration-thickness: 0.18em;
+                text-underline-offset: 0.15em;
+            }
+
+            .email-link:hover,
+            .email-link:focus-visible { background: var(--green); color: #11110f; }
+
+            .site-footer {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 2rem;
+                padding-top: 0.75rem;
+                padding-bottom: max(1rem, env(safe-area-inset-bottom));
+                border-top: 1px solid var(--ink);
+            }
+
+            .footer-meta { margin: 0; color: var(--soft-ink); }
+
+            .social-links {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 0.5rem 1rem;
+            }
+
+            .social-links a {
+                font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.045em;
+                line-height: 1.25;
+                text-transform: uppercase;
+            }
+
+            .social-links a:hover,
+            .social-links a:focus-visible { color: var(--soft-ink); }
+
+            .js .reveal {
                 opacity: 0;
-                animation: riseUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                transform: translateY(1.25rem);
+                transition: opacity 700ms cubic-bezier(.2, .8, .2, 1), transform 700ms cubic-bezier(.2, .8, .2, 1);
             }
-            .anim-slide {
-                opacity: 0;
-                animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+            .js .reveal.is-visible {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .anim-fade {
-                opacity: 0;
-                animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+            @keyframes detail-in {
+                from { opacity: 0; transform: translateY(-0.5rem); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            @media (max-width: 700px) {
+                .masthead { padding-top: 5.5rem; }
+
+                .masthead-title { font-size: clamp(3.8rem, 18vw, 8rem); }
+
+                :root[data-theme="dark"] .masthead-title { font-size: clamp(3.8rem, 18vw, 8rem); }
+
+                .masthead-title .company { margin-left: 0.55rem; }
+
+                .landscape-study { grid-template-columns: 1fr; }
+
+                .landscape-main { min-height: min(110vw, 36rem); }
+
+                .landscape-detail { display: none; }
+
+                .intro-grid,
+                .section-heading,
+                .company-header,
+                .about-header {
+                    grid-template-columns: 1fr;
+                    gap: 0.5rem;
+                }
+
+                .section-heading { padding-bottom: 1.75rem; }
+
+                .project-toggle,
+                .company-row { grid-template-columns: 2.5rem minmax(0, 1fr) auto; gap: 0.5rem; }
+
+                .project-detail { grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.5rem; }
+
+                .timeline-item { grid-template-columns: 5.25rem minmax(0, 1fr); gap: 0.5rem; }
+
+                .timeline-sources { grid-column: 2; flex-direction: row; flex-wrap: wrap; }
+
+                .project-name { font-size: clamp(3.25rem, 16vw, 6rem); }
+
+                .project-name--long { font-size: clamp(2.5rem, 10.7vw, 4rem); }
+
+                .project-status { width: 1.2rem; height: 1.2rem; }
+
+                .company-label { font-size: clamp(3rem, 15vw, 5.8rem); }
+
+                .site-header {
+                    grid-template-columns: minmax(0, 1fr) auto;
+                    gap: 0.5rem 1rem;
+                }
+
+                .folio { grid-column: 1; grid-row: 2; text-align: left; }
+
+                .theme-toggle { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+
+                .site-footer { grid-template-columns: 1fr; gap: 1.5rem; }
+
+                .social-links { justify-content: flex-start; }
+            }
+
+            @media (max-width: 370px) {
+                .masthead { padding-top: 4rem; }
+                .introduction { font-size: 1.55rem; }
+                .project-description { font-size: 1.1rem; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    scroll-behavior: auto !important;
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+
+                .js .reveal { opacity: 1; transform: none; }
             }
         </style>
     </head>
-    <body
-        class="bg-black text-white font-instrument w-screen overflow-hidden"
-        style="height: 100vh; height: 100dvh;"
-        x-data="app()"
-        @keydown.escape.window="closeAll()"
-        @mousemove.window="glow($event)"
-    >
-        <div class="grain"></div>
-        <div class="cursor-glow" :style="`left:${mx}px;top:${my}px`"></div>
+    <body>
+        <a class="skip-link" href="#projects">skip to projects</a>
 
-        <!-- ═══ MAIN ═══ -->
-        <main class="relative w-full p-5 desktop-layout" style="height: 100vh; height: 100dvh;">
-            <!-- blurb -->
-            <p
-                class="blurb vtrim lowercase font-medium text-white max-w-[65%] anim-fade opacity-0 absolute top-5 left-5 transition-all duration-300"
-                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
-                style="
-                    font-size: clamp(1rem, 2.8vw, 3.4rem);
-                    line-height: 80%;
-                    animation-delay: 0.2s;
-                "
-            >
-                <span class="text-agreen">a</span>technology company was started
-                to make useful <span class="text-agreen">things</span> people
-                enjoy to use, with a focus on design, intention and efficiency.
-            </p>
+        <header class="site-header">
+            <p class="brand">atechnology company</p>
+            <p class="folio">independent engineering / design</p>
+            <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span aria-hidden="true">theme / light</span></button>
+        </header>
 
-            <!-- nav -->
-            <nav class="nav-stack absolute top-5 right-5 z-50">
-                <!-- our things / ← back -->
-                <div
-                    class="vtrim lowercase font-medium cursor-pointer select-none transition-colors duration-300 anim-slide opacity-0"
-                    style="
-                        font-size: clamp(1.5rem, 3.8vw, 4.5rem);
-                        --end-op: 1;
-                        animation-delay: 0.5s;
-                    "
-                    :class="activeThing ? 'text-agreen opacity-100' : 'text-white'"
-                    @click="activeThing && closeThing()"
-                    x-text="activeThing ? '← our things' : 'our things'"
-                ></div>
+        <main>
+            <div class="content-shell">
+            <section class="masthead" aria-labelledby="page-title">
+                <h1 class="masthead-title" id="page-title"><span>atechnology</span><span class="company">company</span></h1>
+            </section>
 
-                <!-- product items -->
-                <template x-for="(key, i) in thingKeys" :key="key">
-                    <div
-                        class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300 anim-slide"
-                        :style="`font-size: clamp(1.5rem, 3.8vw, 4.5rem); --end-op: 0.5; animation-delay: ${0.6 + i * 0.1}s`"
-                        :class="activeThing === key ? '!opacity-100 text-white' : 'text-white/50 hover:opacity-100 hover:text-white'"
-                        @click="toggleThing(key)"
-                        x-text="key"
-                    ></div>
-                </template>
-            </nav>
+            <figure class="landscape-study reveal" aria-label="a study in distance">
+                <div class="landscape-main"><img src="assets/landscape.webp" width="1536" height="1024" alt="monochrome mountain landscape with dark foreground rocks, distant ridges and light through clouds" /></div>
+                <div class="landscape-detail" aria-hidden="true"><figcaption class="landscape-caption"><span>a study in distance</span><span>field note / 01</span></figcaption></div>
+            </figure>
 
-            <!-- hero -->
-            <div
-                class="hero-title absolute bottom-[4%] left-0 px-5 anim-rise opacity-0 transition-all duration-300"
-                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
-                style="animation-delay: 0.4s"
-            >
-                <h1
-                    class="vtrim lowercase font-medium text-white"
-                    style="
-                        font-size: clamp(4rem, 16vw, 19.5rem);
-                        line-height: 50%;
-                    "
-                >
-                    we are<br /><span class="text-agreen">a</span
-                    >technology<br />company
-                </h1>
+            <section class="intro-grid" aria-labelledby="introduction-label">
+                <p class="kicker" id="introduction-label">01 / introduction</p>
+                <p class="introduction">we make useful <span class="highlight">things</span> with attention to design, intention and efficiency.</p>
+            </section>
+
+            <section class="project-section" id="projects" aria-labelledby="projects-title">
+                <header class="section-heading">
+                    <p class="kicker">02 / current index</p>
+                    <h2 id="projects-title">what we are building now.</h2>
+                </header>
+
+                <ol class="project-index">
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">01</span><span class="project-name">accompany</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">cissa goes with you. cupboard brings your digital life home. two companions being developed around useful context, open systems, and data that belongs to you.</p><div class="project-meta"><p class="project-stack">hardware / software / in development</p><a class="project-link" href="https://accompany.tsc.hk" target="_blank" rel="noreferrer">accompany.tsc.hk ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">02</span><span class="project-name">moonshine</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a bun-first web framework that starts with signals. routing, rendering, and server behavior are separate pieces you add as needed. its crepuscularity adapter connects .crepus templates to the web; moonshine also powers accompany’s site.</p><div class="project-meta"><p class="project-stack">typescript / bun / tschk</p><a class="project-link" href="https://moonshine.tsc.hk" target="_blank" rel="noreferrer">moonshine.tsc.hk ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">03</span><span class="project-name project-name--long">crepuscularity</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a systems ui toolkit built around a compact template language. shared interface definitions reach desktop, terminal, web, and embedded surfaces. a rust parser, view ir, and hot reload keep the work connected across targets.</p><div class="project-meta"><p class="project-stack">rust / ui toolkit / tschk</p><a class="project-link" href="https://crepuscularity.tsc.hk" target="_blank" rel="noreferrer">crepuscularity.tsc.hk ↗</a></div></div></div>
+                        </details>
+                    </li>
+                </ol>
+
+                <header class="section-heading">
+                    <p class="kicker">03 / earlier studies</p>
+                    <h2>ideas we keep coming back to.</h2>
+                </header>
+                <ol class="project-index">
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">01</span><span class="project-name">atmosphere</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">an exploration of handoffs, clipboard and file sharing across devices without lock-in.</p><div class="project-meta"><p class="project-stack">swift / rust / beta</p><a class="project-link" href="https://github.com/atechnology-company/atmosphere" target="_blank" rel="noreferrer">github.com/atechnology-company/atmosphere ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">02</span><span class="project-name">subspace</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">an editor and memory-workspace experiment, with threads toward mcp and voice capture.</p><div class="project-meta"><p class="project-stack">react native / supabase</p><a class="project-link" href="https://github.com/atechnology-company/subspace" target="_blank" rel="noreferrer">github.com/atechnology-company/subspace ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">03</span><span class="project-name">soliloquy</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">research toward a web- and ai-native operating system, touching zircon, vlang and rover.</p><div class="project-meta"><p class="project-stack">vlang / rust / c++ / svelte</p><a class="project-link" href="https://github.com/atechnology-company/soliloquy" target="_blank" rel="noreferrer">github.com/atechnology-company/soliloquy ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">04</span><span class="project-name">plates</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a personal-assistant project exploring local-first storage, device continuity, and contextual interfaces. its history follows the same questions behind accompany: what should an assistant remember, where should that memory live, and who controls it?</p><div class="project-meta"><p class="project-stack">swift / rust / svelte</p><a class="project-link" href="https://github.com/atechnology-company/plates" target="_blank" rel="noreferrer">github.com/atechnology-company/plates ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">05</span><span class="project-name">rover</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">browser work around servo and rusty v8.</p><div class="project-meta"><p class="project-stack">rust / c++</p><a class="project-link" href="https://github.com/atechnology-company/rover" target="_blank" rel="noreferrer">github.com/atechnology-company/rover ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">06</span><span class="project-name">graft</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a sales and customer-communications product.</p><div class="project-meta"><p class="project-stack">svelte / zig / rust</p><a class="project-link" href="https://graftai.com.au" target="_blank" rel="noreferrer">graftai.com.au ↗</a></div></div></div>
+                        </details>
+                    </li>
+                    <li class="project-item">
+                        <details>
+                            <summary class="project-toggle"><span class="project-number">07</span><span class="project-name">pava</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a marketing-workflow experiment around ideation, scheduling and analytics.</p><div class="project-meta"><p class="project-stack">nextjs / supabase / rust / beta</p><a class="project-link" href="https://pava.studio" target="_blank" rel="noreferrer">pava.studio ↗</a></div></div></div>
+                        </details>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="timeline-section reveal" aria-labelledby="timeline-title">
+                <header class="section-heading">
+                    <p class="kicker">04 / working record</p>
+                    <h2 id="timeline-title">from continuity to companionship.</h2>
+                </header>
+                <ol class="timeline-list">
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-10-28">28 oct 2025</time><p class="timeline-entry">plates shows its first visible client and server development.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/43b20fe229ad50593317463b59e41515f283b657" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-11-20">20 nov 2025</time><p class="timeline-entry">plates documents cupboard for local-first storage, tableware for coordination and a superassistant vision.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/16d76914d216687d0626129369b526321290a672" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-12">dec 2025</time><p class="timeline-entry">arkie is described as a spatial, context-aware assistant hud, then as replacing a legacy assistant.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/aabae3eaa41bf75c8dff76806259f04394048410" target="_blank" rel="noreferrer">hud ↗</a><a class="source-link" href="https://github.com/atechnology-company/plates/commit/06eeb526b6d8a952ffd6334871c2b9c82e8bd9fa" target="_blank" rel="noreferrer">legacy ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-25">25 jul 2026</time><p class="timeline-entry">moonshine’s initial public commit appears in the tschk repository.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/moonshine/commit/32659f2389cfe3701950b05f7a9e8a05eae0ecc0" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-31">31 jul 2026</time><p class="timeline-entry">crepuscularity records its wasm work in the tschk repository.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/crepuscularity/commit/50d659e94e23509349aa51199068e1860682398a" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-09-27">27 sep 2026</time><p class="timeline-entry">the accompany public site enters the record.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/accompany/commit/47b5a06eec9243c34eeadc984f18e6be8df5c322" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                </ol>
+                <p class="timeline-note">dated from the development history. different projects, a recurring idea: useful technology should keep your context close and your data in your hands. cissa and cupboard hardware remain in development.</p>
+            </section>
             </div>
 
-            <!-- about button — always on top -->
-            <div
-                class="about-btn absolute bottom-5 right-5 anim-fade opacity-0 transition-all duration-300"
-                style="animation-delay: 1.3s; z-index: 70"
-                :class="activeThing ? '!opacity-0 !pointer-events-none' : ''"
-            >
-                <div
-                    class="vtrim lowercase font-medium cursor-pointer select-none transition-all duration-300"
-                    style="
-                        font-size: clamp(1.5rem, 3.8vw, 4.5rem);
-                        line-height: 1;
-                    "
-                    :class="aboutOpen ? 'text-agreen opacity-100' : 'text-white/50 opacity-50 hover:text-white hover:opacity-100'"
-                    @click="toggleAbout()"
-                >
-                    about us
-                </div>
+        <section class="company-section" aria-labelledby="company-title">
+            <div class="company-shell">
+                <header class="company-header">
+                    <p class="kicker">05 / company index</p>
+                    <div>
+                        <h2 id="company-title">the tools. the companions.</h2>
+                        <p class="company-note">the software company of hong kong develops open foundations including moonshine and crepuscularity. accompany brings the work closer to everyday life through cissa and cupboard. explore the tools, or meet the companions.</p>
+                    </div>
+                </header>
+                <nav class="company-list" aria-label="Company links">
+                    <a class="company-row" href="https://tsc.hk" target="_blank" rel="noreferrer"><span class="company-number">01</span><span class="company-label">the software company of hong kong</span><span class="company-arrow" aria-hidden="true">↗</span></a>
+                    <a class="company-row" href="https://accompany.tsc.hk" target="_blank" rel="noreferrer"><span class="company-number">02</span><span class="company-label">accompany</span><span class="company-arrow" aria-hidden="true">↗</span></a>
+                </nav>
+            </div>
+        </section>
+
+            <div class="content-shell">
+            <section class="about-section" aria-labelledby="about-title">
+                <header class="about-header">
+                    <p class="kicker">06 / about</p>
+                    <h2 id="about-title">atechnology company builds tools at the intersection of design and engineering. we want software to feel considered, quiet and useful.</h2>
+                </header>
+
+                <a class="email-link" href="mailto:imhere@atechnology.company">imhere@atechnology.company</a>
+            </section>
             </div>
         </main>
 
-        <!-- ═══ THING OVERLAY ═══ -->
-        <div
-            class="fixed inset-0 bg-black z-40 transition-opacity duration-500 opacity-0 pointer-events-none"
-            :class="activeThing ? '!opacity-100 !pointer-events-auto' : '!opacity-0 !pointer-events-none'"
-        >
-            <div
-                class="thing-overlay-inner p-5 relative transition-all duration-500"
-                style="height: 100vh; height: 100dvh;"
-                :class="(activeThing && !transitioning) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
-            >
-                <!-- desc + stack -->
-                <div
-                    class="thing-desc absolute left-5 top-5 max-w-[65%]"
-                    x-show="activeThing"
-                    x-transition
-                >
-                    <p
-                        class="vtrim lowercase font-medium text-white mb-12"
-                        style="
-                            font-size: clamp(1rem, 2.8vw, 3.4rem);
-                            line-height: 80%;
-                        "
-                        x-text="currentData?.desc"
-                    ></p>
-
-                    <!-- stack -->
-                    <div class="flex flex-wrap gap-3">
-                        <template
-                            x-for="tech in (currentData?.stack || [])"
-                            :key="tech"
-                        >
-                            <span
-                                class="text-xs font-medium uppercase tracking-widest inline-block"
-                                :style="`color: ${colorForText(tech)}`"
-                                x-text="tech"
-                            ></span>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- links (bottom left) -->
-                <div
-                    class="thing-links absolute left-5 bottom-5"
-                    x-show="activeThing && currentData?.links?.length > 0"
-                    x-transition.opacity.duration.500ms
-                >
-                    <div class="flex flex-wrap gap-8">
-                        <template
-                            x-for="link in (currentData?.links || [])"
-                            :key="link.label"
-                        >
-                            <a
-                                :href="link.url"
-                                target="_blank"
-                                class="group flex items-center gap-2 text-xl font-medium text-white hover:text-agreen transition-colors duration-300"
-                            >
-                                <span x-text="link.label"></span>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="2"
-                                    stroke="currentColor"
-                                    class="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-                                    />
-                                </svg>
-                            </a>
-                        </template>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ ABOUT OVERLAY ═══ -->
-        <div
-            class="fixed inset-0 bg-black transition-opacity duration-500 opacity-0 pointer-events-none"
-            style="z-index: 60"
-            :class="aboutOpen ? '!opacity-100 !pointer-events-auto' : '!opacity-0 !pointer-events-none'"
-        >
-            <div
-                class="p-5 relative overflow-y-auto transition-all duration-500"
-                style="height: 100vh; height: 100dvh;"
-                :class="aboutOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
-            >
-                <div class="max-w-[700px]">
-                    <p
-                        class="vtrim lowercase font-medium text-white mb-6"
-                        style="
-                            font-size: clamp(1rem, 2.8vw, 3.4rem);
-                            line-height: 80%;
-                        "
-                    >
-                        <span class="text-agreen">a</span>technology company
-                        builds tools at the intersection of design and
-                        engineering. we believe software should feel inevitable
-                        — like it was always supposed to exist.
-                    </p>
-
-                    <div class="mt-12">
-                        <p
-                            class="vtrim lowercase font-medium text-white/30 uppercase tracking-widest text-xs mb-6"
-                        >
-                            founders
-                        </p>
-
-                        <div class="mb-8">
-                            <p
-                                class="vtrim lowercase font-medium text-white mb-1"
-                                style="font-size: clamp(1rem, 1.8vw, 1.5rem)"
-                            >
-                                dominic callinan
-                            </p>
-                            <p class="text-white/50 text-sm leading-relaxed">
-                                leads client partnerships and strategy.
-                            </p>
-                            <a
-                                href="mailto:dom@graftai.com.au"
-                                class="text-agreen/70 hover:text-agreen text-sm transition-colors duration-300"
-                                >dom@graftai.com.au</a
-                            >
-                        </div>
-
-                        <div class="mb-12">
-                            <p
-                                class="vtrim lowercase font-medium text-white mb-1"
-                                style="font-size: clamp(1rem, 1.8vw, 1.5rem)"
-                            >
-                                max carter
-                            </p>
-                            <p class="text-white/50 text-sm leading-relaxed">
-                                leads engineering and ai development.
-                            </p>
-                            <a
-                                href="mailto:max@undivisible.dev"
-                                class="text-agreen/70 hover:text-agreen text-sm transition-colors duration-300"
-                                >max@undivisible.dev</a
-                            >
-                        </div>
-                    </div>
-
-                    <div>
-                        <a
-                            href="mailto:imhere@atechnology.company"
-                            class="text-white/40 hover:text-white text-sm transition-colors duration-300 block mb-6"
-                            >imhere@atechnology.company</a
-                        >
-                        <div class="flex flex-col gap-1">
-                            <a
-                                href="https://github.com/atechnology-company"
-                                target="_blank"
-                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
-                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
-                                >github.com/atechnology-company</a
-                            >
-                            <a
-                                href="https://instagram.com/atechnologycompany"
-                                target="_blank"
-                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
-                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
-                                >instagram.com/atechnologycompany</a
-                            >
-                            <a
-                                href="https://x.com/atechnologycom"
-                                target="_blank"
-                                class="vtrim lowercase font-medium text-white/30 hover:text-white transition-colors duration-300"
-                                style="font-size: clamp(0.8rem, 1.2vw, 1.1rem)"
-                                >x.com/atechnologycom</a
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <footer class="site-footer">
+            <p class="footer-meta">atechnology company / design, intention and efficiency.</p>
+            <nav class="social-links" aria-label="Social links">
+                <a href="https://github.com/atechnology-company" target="_blank" rel="noreferrer">github</a>
+                <a href="https://instagram.com/atechnologycompany" target="_blank" rel="noreferrer">instagram</a>
+                <a href="https://x.com/atechnologycom" target="_blank" rel="noreferrer">x</a>
+            </nav>
+        </footer>
 
         <script>
-            function app() {
-                return {
-                    mx: 0,
-                    my: 0,
-                    activeThing: null,
-                    aboutOpen: false,
-                    transitioning: false,
-
-                    thingKeys: [
-                        "atmosphere",
-                        "subspace",
-                        "soliloquy",
-                        "plates",
-                        "rover",
-                        "graft",
-                        "pava",
-                    ],
-
-                    things: {
-                        atmosphere: {
-                            desc: "an ecosystem for every device. atmosphere gives every device apple native-level handoffs, clipboard and file sharing without lockins.",
-                            stack: ["swift", "rust", "beta"],
-                            links: [
-                                {
-                                    label: "github.com/atechnology-company/atmosphere",
-                                    url: "https://github.com/atechnology-company/atmosphere",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=A",
-                        },
-                        subspace: {
-                            desc: "the ai memory bank. subspace is a text editor, document editor, code editor, all things text and has an mcp so that your profile syncs across any service. subspace also has a blurt mode with voice input to sort your memories into the appropriate sections in your database.",
-                            stack: ["react native", "supabase"],
-                            links: [
-                                {
-                                    label: "github.com/atechnology-company/subspace",
-                                    url: "https://github.com/atechnology-company/subspace",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=S",
-                        },
-                        soliloquy: {
-                            desc: "the web and ai native operating system of the future. built on zircon translated to vlang and rover.",
-                            stack: ["vlang", "rust", "c++", "svelte"],
-                            links: [
-                                {
-                                    label: "github.com/atechnology-company/soliloquy",
-                                    url: "https://github.com/atechnology-company/soliloquy",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=SQ",
-                        },
-                        plates: {
-                            desc: "the personal ai assistant and the culmination of all of our software. plates keeps you in touch of whats important and serves as our design philosophy oi! (operation on intention). plates is on every device, every platform, connects to subspace and atmosphere and acts as your interface into the digital world.",
-                            stack: ["swift", "rust", "svelte"],
-                            links: [
-                                {
-                                    label: "github.com/atechnology-company/plates",
-                                    url: "https://github.com/atechnology-company/plates",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=P",
-                        },
-                        rover: {
-                            desc: "a browser rebuilt for today. with servo and rusty v8.",
-                            stack: ["rust", "c++"],
-                            links: [
-                                {
-                                    label: "github.com/atechnology-company/rover",
-                                    url: "https://github.com/atechnology-company/rover",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=R",
-                        },
-                        graft: {
-                            desc: "an ai sales agent that handles customer conversion, social media, support and telephony. graft works so you don't have to.",
-                            stack: ["svelte", "zig", "rust"],
-                            links: [
-                                {
-                                    label: "graftai.com.au",
-                                    url: "https://graftai.com.au",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=G",
-                        },
-                        pava: {
-                            desc: "the completely automated digital marketing agency, pava automated ideation, crossposting and scheduling, while giving you advanced analytics on all your platforms to formulate into future ideas.",
-                            stack: ["nextjs", "supabase", "rust", "beta"],
-                            links: [
-                                {
-                                    label: "pava.studio",
-                                    url: "https://pava.studio",
-                                },
-                            ],
-                            logo: "https://placehold.co/400x400/111/333?text=PV",
-                        },
-                    },
-
-                    get currentData() {
-                        return this.activeThing
-                            ? this.things[this.activeThing]
-                            : null;
-                    },
-
-                    colorForText(text) {
-                        let hash = 0;
-                        for (let i = 0; i < text.length; i++) {
-                            hash = text.charCodeAt(i) + ((hash << 5) - hash);
-                        }
-                        const c = (hash & 0x00ffffff)
-                            .toString(16)
-                            .toUpperCase();
-                        return "#" + "00000".substring(0, 6 - c.length) + c;
-                    },
-
-                    glow(e) {
-                        this.mx = e.clientX;
-                        this.my = e.clientY;
-                    },
-
-                    toggleThing(key) {
-                        if (this.aboutOpen) this.aboutOpen = false;
-
-                        if (this.activeThing && this.activeThing !== key) {
-                            this.transitioning = true;
-                            setTimeout(() => {
-                                this.activeThing = key;
-                                setTimeout(() => {
-                                    this.transitioning = false;
-                                }, 50);
-                            }, 500);
-                        } else {
-                            this.activeThing =
-                                this.activeThing === key ? null : key;
-                        }
-                    },
-
-                    closeThing() {
-                        this.activeThing = null;
-                    },
-
-                    toggleAbout() {
-                        if (this.activeThing) this.activeThing = null;
-                        this.aboutOpen = !this.aboutOpen;
-                    },
-
-                    closeAll() {
-                        this.activeThing = null;
-                        this.aboutOpen = false;
-                    },
+            (() => {
+                const root = document.documentElement;
+                const key = "atechnology-theme";
+                const toggle = document.querySelector(".theme-toggle");
+                const themeColor = document.querySelector('meta[name="theme-color"]');
+                const setTheme = (theme, persist = false) => {
+                    root.dataset.theme = theme;
+                    themeColor.content = theme === "dark" ? "#11110f" : "#efeee8";
+                    toggle.setAttribute("aria-pressed", String(theme === "dark"));
+                    toggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} mode`);
+                    toggle.firstElementChild.textContent = `theme / ${theme}`;
+                    if (persist) {
+                        try { localStorage.setItem(key, theme); } catch (_) {}
+                    }
                 };
+
+                setTheme(root.dataset.theme);
+                toggle.addEventListener("click", () => {
+                    setTheme(root.dataset.theme === "dark" ? "light" : "dark", true);
+                });
+
+                const media = matchMedia("(prefers-color-scheme: dark)");
+                media.addEventListener("change", ({ matches }) => {
+                    try {
+                        if (localStorage.getItem(key)) return;
+                    } catch (_) { return; }
+                    setTheme(matches ? "dark" : "light");
+                });
+            })();
+
+            document.querySelectorAll(".project-item details").forEach((detail) => {
+                detail.addEventListener("toggle", () => {
+                    if (!detail.open) return;
+                    document.querySelectorAll(".project-item details[open]").forEach((other) => {
+                        if (other !== detail) other.open = false;
+                    });
+                });
+            });
+
+            const reveals = document.querySelectorAll(".reveal");
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.12 });
+                reveals.forEach((element) => observer.observe(element));
+            } else {
+                reveals.forEach((element) => element.classList.add("is-visible"));
             }
         </script>
     </body>
