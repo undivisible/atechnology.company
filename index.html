@@ -21,6 +21,13 @@
             })();
         </script>
         <style>
+            @property --paper { syntax: '<color>'; inherits: true; initial-value: #efeee8; }
+            @property --ink { syntax: '<color>'; inherits: true; initial-value: #11110f; }
+            @property --soft-ink { syntax: '<color>'; inherits: true; initial-value: #55554e; }
+            @property --hairline { syntax: '<color>'; inherits: true; initial-value: rgba(17,17,15,.22); }
+            @property --company-hairline { syntax: '<color>'; inherits: true; initial-value: rgba(239,238,232,.38); }
+            @property --company-accent { syntax: '<color>'; inherits: true; initial-value: #bdff00; }
+
             :root {
                 --paper: #efeee8;
                 --ink: #11110f;
@@ -31,6 +38,11 @@
                 --company-accent: #bdff00;
                 --pad: clamp(1rem, 2.4vw, 3.5rem);
                 color-scheme: light;
+            }
+
+            :root.theme-ready {
+                transition: --paper 1.2s ease, --ink 1.2s ease, --soft-ink 1.2s ease,
+                    --hairline 1.2s ease, --company-hairline 1.2s ease, --company-accent 1.2s ease;
             }
 
             :root[data-theme="dark"] {
@@ -48,6 +60,8 @@
             html {
                 overflow-x: hidden;
                 background: var(--paper);
+                scroll-behavior: smooth;
+                scroll-padding-top: 2rem;
             }
 
             body {
@@ -101,9 +115,11 @@
             .site-header {
                 display: grid;
                 grid-template-columns: minmax(0, 1fr) auto auto;
-                gap: 1rem;
-                align-items: start;
-                padding-top: 1rem;
+                gap: clamp(1rem, 3vw, 3rem);
+                align-items: center;
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                border-bottom: 1px solid var(--hairline);
             }
 
             .brand,
@@ -124,14 +140,21 @@
             .brand,
             .folio { margin: 0; }
 
+            .brand { text-decoration: none; text-transform: lowercase; font-size: .8rem; }
+            .header-nav { display: flex; gap: clamp(1rem, 2vw, 2rem); }
+            .header-nav a { text-decoration: none; padding: .65rem 0; }
+            .header-nav a:hover { text-decoration: underline; text-underline-offset: .4em; }
             .folio { color: var(--soft-ink); text-align: right; }
 
             .theme-toggle {
-                min-width: 6.7rem;
-                padding: 0.45rem 0.55rem;
+                display: flex;
+                align-items: center;
+                gap: .65rem;
+                min-height: 44px;
+                padding: .6rem .8rem;
                 color: var(--ink);
-                border: 1px solid var(--ink);
-                border-radius: 0;
+                border: 1px solid var(--hairline);
+                border-radius: 2rem;
                 background: transparent;
                 cursor: pointer;
                 font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -144,6 +167,17 @@
                 transition: color 160ms ease, background 160ms ease;
             }
 
+            .theme-toggle::after {
+                content: "";
+                width: 16px;
+                height: 16px;
+                border: 1px solid currentColor;
+                border-radius: 50%;
+                background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+                transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+            }
+            :root[data-theme="dark"] .theme-toggle::after { transform: rotate(180deg); }
+
             .theme-toggle:hover,
             .theme-toggle:focus-visible {
                 color: #11110f;
@@ -151,9 +185,16 @@
             }
 
             .masthead {
-                padding-top: clamp(3.5rem, 8vw, 10rem);
-                padding-bottom: clamp(3rem, 6vw, 7rem);
+                position: relative;
+                padding-top: clamp(3.5rem, 6vw, 7rem);
+                padding-bottom: clamp(2.5rem, 4vw, 5rem);
             }
+
+            .masthead-note { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+            .masthead-note a { text-decoration: none; }
+            .masthead-title span { animation: title-in 1s cubic-bezier(.2,.8,.2,1) both; }
+            .masthead-title .company { animation-delay: .12s; }
+            @keyframes title-in { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: none; } }
 
             .masthead-title {
                 max-width: 14ch;
@@ -180,7 +221,7 @@
                 display: grid;
                 grid-template-columns: minmax(0, 1.55fr) minmax(11rem, 0.45fr);
                 gap: 1px;
-                margin-bottom: clamp(4.5rem, 11vw, 13rem);
+                margin: 0 0 clamp(4.5rem, 8vw, 10rem);
                 overflow: hidden;
                 color: var(--paper);
                 background: var(--ink);
@@ -189,22 +230,36 @@
             .landscape-main,
             .landscape-detail {
                 position: relative;
-                min-height: clamp(22rem, 51vw, 54rem);
+                min-height: clamp(22rem, 43vw, 45rem);
                 overflow: hidden;
                 background: #74736d;
             }
 
             .landscape-main img {
+                position: absolute;
+                inset: 0;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 object-position: 48% 55%;
-                filter: grayscale(1) contrast(1.07);
+                filter: grayscale(1) contrast(1.07) brightness(1);
                 transform: scale(1.035);
-                transition: transform 1.6s cubic-bezier(.2, .8, .2, 1);
+                transition: transform 1.6s cubic-bezier(.2, .8, .2, 1), filter 1.2s ease;
             }
 
             .landscape-study.is-visible .landscape-main img { transform: scale(1); }
+            :root[data-theme="dark"] .landscape-main img { filter: grayscale(1) contrast(1.1) brightness(.7); }
+            .landscape-main::after {
+                content: "";
+                position: absolute;
+                inset: -25%;
+                pointer-events: none;
+                background: linear-gradient(120deg, transparent 35%, #ffffff20 49%, transparent 63%);
+                animation: daylight 18s ease-in-out infinite alternate;
+                animation-play-state: paused;
+            }
+            .landscape-study.is-active .landscape-main::after { animation-play-state: running; }
+            @keyframes daylight { from { transform: translateX(-12%) rotate(-8deg); } to { transform: translateX(12%) rotate(8deg); } }
 
             .landscape-detail {
                 background-image: url("assets/landscape.webp");
@@ -259,9 +314,29 @@
                 margin: 0;
                 padding-top: clamp(2rem, 4vw, 4.5rem);
                 font-size: clamp(1.7rem, 3.7vw, 5.4rem);
-                line-height: 0.91;
+                line-height: 1.08;
                 letter-spacing: -0.065em;
             }
+
+            .introduction .word { opacity: .6; transition: opacity .35s ease; }
+            .introduction .word.is-read { opacity: 1; }
+            .ownership-loop { display: grid; grid-template-columns: repeat(4, 1fr); margin-bottom: 6rem; border-top: 1px solid var(--hairline); }
+            .ownership-loop article { padding: 1.5rem 1.5rem 1.5rem 0; }
+            .ownership-loop h3 { font-size: clamp(1.4rem, 2.6vw, 3rem); font-weight: 500; letter-spacing: -.06em; margin: 1.5rem 0 .6rem; }
+            .ownership-loop p:last-child { max-width: 24ch; color: var(--soft-ink); line-height: 1.5; font-size: .95rem; }
+            .milestone { border-top: 1px solid var(--ink); padding: 1rem 0 4rem; display: grid; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 2rem; }
+            .milestone-number { font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-size: clamp(6rem, 19vw, 22rem); letter-spacing: -.045em; line-height: 1; }
+            .milestone-number .highlight { display: inline-block; margin-left: .08em; padding: .03em .08em .07em; font-size: .8em; letter-spacing: 0; }
+            .milestone h2 { font-size: clamp(1.6rem, 3.2vw, 4rem); font-weight: 500; line-height: 1; letter-spacing: -.06em; margin: 0; }
+            .milestone p { max-width: 45ch; color: var(--soft-ink); line-height: 1.5; }
+            .readout { font-family: ui-monospace, monospace; font-size: .72rem; border-top: 1px solid var(--hairline); padding: 1rem 0; }
+            .readout span { display: block; margin: .4rem 0; }
+            .readout.is-visible span { animation: detail-in .6s both; }
+            .readout.is-visible span:nth-child(2) { animation-delay: .15s; }
+            .readout.is-visible span:nth-child(3) { animation-delay: .3s; }
+            .tool-index { padding: 2rem 0; display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+            .tool-index .kicker { width: 100%; margin-bottom: 0; }
+            .tool-index a { font-size: clamp(1rem, 2vw, 1.6rem); text-underline-offset: .3em; text-decoration-color: var(--hairline); }
 
             .highlight {
                 padding: 0.02em 0.075em 0.08em;
@@ -317,17 +392,13 @@
                 font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
                 font-size: clamp(3.2rem, 7.7vw, 10rem);
                 font-weight: 400;
-                line-height: 0.72;
-                letter-spacing: -0.055em;
+                line-height: 0.9;
+                letter-spacing: 0;
                 text-transform: lowercase;
             }
 
-            .project-name--long { letter-spacing: -0.07em; }
-
-            :root[data-theme="dark"] .project-name {
-                color: var(--paper);
-                -webkit-text-stroke: clamp(1px, 0.08vw, 2px) var(--ink);
-            }
+            .project-name { transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+            .project-toggle:hover .project-name { transform: translateX(.08em); }
 
             .project-status {
                 width: 1.45rem;
@@ -335,10 +406,14 @@
                 border: 1px solid var(--ink);
                 border-radius: 50%;
                 transform: translateY(-0.08em);
-                transition: background 160ms ease;
+                position: relative;
+                transition: background .3s ease, transform .4s ease;
             }
 
-            .project-item details[open] .project-status { background: var(--green); }
+            .project-status::before, .project-status::after { content: ""; position: absolute; background: var(--ink); width: 8px; height: 1px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+            .project-status::after { transform: translate(-50%, -50%) rotate(90deg); }
+            .project-item details[open] .project-status { background: var(--green); transform: rotate(135deg); }
+            .project-item details[open] .project-status::before, .project-item details[open] .project-status::after { background: #11110f; }
 
             .project-toggle:hover .project-name,
             .project-toggle:focus-visible .project-name { text-decoration: underline; text-decoration-color: var(--green); text-decoration-thickness: 0.08em; text-underline-offset: 0.07em; }
@@ -391,8 +466,6 @@
             .project-link:hover,
             .project-link:focus-visible { background: var(--green); color: #11110f; }
 
-            .project-item details[open] .project-detail { animation: detail-in 260ms cubic-bezier(.2, .8, .2, 1) both; }
-
             .timeline-section {
                 padding-top: clamp(4.5rem, 11vw, 13rem);
                 padding-bottom: clamp(4.5rem, 11vw, 13rem);
@@ -400,6 +473,7 @@
             }
 
             .timeline-list {
+                position: relative;
                 margin: 0;
                 padding: 0;
                 list-style: none;
@@ -414,6 +488,12 @@
                 padding: clamp(1rem, 2vw, 2rem) 0;
                 border-bottom: 1px solid var(--hairline);
             }
+
+            .timeline-year { list-style: none; padding: 2rem 0; font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-size: clamp(5rem, 14vw, 12rem); line-height: 1; letter-spacing: -.05em; color: var(--soft-ink); }
+            .timeline-entry strong { display: block; font-weight: 500; font-size: 1.35em; margin-bottom: .55rem; color: var(--ink); }
+            .timeline-entry { color: var(--soft-ink); }
+            .timeline-date::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--soft-ink); margin-right: .55rem; transition: background .5s, box-shadow .5s; }
+            .timeline-item.is-visible .timeline-date::before { background: #739b00; box-shadow: 0 0 0 4px #bdff0030; }
 
             .timeline-date,
             .source-link {
@@ -431,7 +511,7 @@
                 max-width: 38ch;
                 margin: 0;
                 font-size: clamp(1.1rem, 1.65vw, 1.7rem);
-                line-height: 1.02;
+                line-height: 1.35;
                 letter-spacing: -0.04em;
             }
 
@@ -569,6 +649,11 @@
 
             .footer-meta { margin: 0; color: var(--soft-ink); }
 
+            .footer-play { padding: 2rem 0 0; overflow: hidden; }
+            .gravity-toggle { border: 0; border-bottom: 1px solid var(--ink); background: transparent; color: var(--ink); padding: .8rem 0; cursor: pointer; }
+            .gravity-word { display: flex; justify-content: space-between; align-items: flex-start; height: clamp(12rem, 33vw, 38rem); padding: 1rem clamp(.75rem, 2vw, 2rem) 0; margin: 0; font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; font-size: clamp(6rem, 22vw, 27rem); line-height: .95; letter-spacing: -.06em; user-select: none; pointer-events: none; }
+            .gravity-word span { display: inline-block; transform-origin: 50% 90%; }
+
             .social-links {
                 display: flex;
                 flex-wrap: wrap;
@@ -605,7 +690,7 @@
             }
 
             @media (max-width: 700px) {
-                .masthead { padding-top: 5.5rem; }
+                .masthead { padding-top: 3.5rem; }
 
                 .masthead-title { font-size: clamp(3.8rem, 18vw, 8rem); }
 
@@ -638,22 +723,22 @@
 
                 .timeline-sources { grid-column: 2; flex-direction: row; flex-wrap: wrap; }
 
-                .project-name { font-size: clamp(3.25rem, 16vw, 6rem); }
+                .project-name { font-size: clamp(2.6rem, 13vw, 6rem); }
 
-                .project-name--long { font-size: clamp(2.5rem, 10.7vw, 4rem); }
+                .project-name--long { font-size: clamp(1.95rem, 10vw, 4rem); }
 
                 .project-status { width: 1.2rem; height: 1.2rem; }
 
                 .company-label { font-size: clamp(3rem, 15vw, 5.8rem); }
 
-                .site-header {
-                    grid-template-columns: minmax(0, 1fr) auto;
-                    gap: 0.5rem 1rem;
-                }
-
-                .folio { grid-column: 1; grid-row: 2; text-align: left; }
-
-                .theme-toggle { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+                .site-header { grid-template-columns: minmax(0, 1fr) auto; gap: .75rem 1rem; }
+                .header-nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; border-top: 1px solid var(--hairline); padding-top: .5rem; }
+                .theme-toggle { grid-column: 2; grid-row: 1; }
+                .ownership-loop { grid-template-columns: 1fr 1fr; margin-bottom: 3rem; }
+                .ownership-loop article { padding-right: 1rem; }
+                .milestone { grid-template-columns: 1fr; gap: 1rem; }
+                .milestone-number { font-size: 28vw; }
+                .masthead-note { font-size: .6rem; }
 
                 .site-footer { grid-template-columns: 1fr; gap: 1.5rem; }
 
@@ -675,15 +760,16 @@
                 }
 
                 .js .reveal { opacity: 1; transform: none; }
+                .introduction .word { opacity: 1; }
             }
         </style>
     </head>
     <body>
         <a class="skip-link" href="#projects">skip to projects</a>
 
-        <header class="site-header">
-            <p class="brand">atechnology company</p>
-            <p class="folio">independent engineering / design</p>
+        <header class="site-header" id="top">
+            <a class="brand" href="#top">atechnology company</a>
+            <nav class="header-nav kicker" aria-label="Main navigation"><a href="#projects">work</a><a href="#history">history</a><a href="#about">about</a></nav>
             <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span aria-hidden="true">theme / light</span></button>
         </header>
 
@@ -691,6 +777,7 @@
             <div class="content-shell">
             <section class="masthead" aria-labelledby="page-title">
                 <h1 class="masthead-title" id="page-title"><span>atechnology</span><span class="company">company</span></h1>
+                <div class="masthead-note kicker"><span>independent engineering / design</span><a href="#projects">useful things, built in the open ↓</a></div>
             </section>
 
             <figure class="landscape-study reveal" aria-label="a study in distance">
@@ -699,8 +786,20 @@
             </figure>
 
             <section class="intro-grid" aria-labelledby="introduction-label">
-                <p class="kicker" id="introduction-label">01 / introduction</p>
-                <p class="introduction">we make useful <span class="highlight">things</span> with attention to design, intention and efficiency.</p>
+                <p class="kicker" id="introduction-label">01 / a shared idea</p>
+                <p class="introduction">your tools should work for you. your data should stay yours. we build useful things in the open, from the languages underneath to the companions beside you.</p>
+            </section>
+
+            <div class="ownership-loop" aria-label="Design principles">
+                <article class="reveal"><p class="kicker">01 / understand</p><h3>open the box.</h3><p>source you can read. systems you can understand. no trust required in a black box.</p></article>
+                <article class="reveal"><p class="kicker">02 / own</p><h3>keep it yours.</h3><p>your memory, files and context belong with you, not behind someone else’s subscription.</p></article>
+                <article class="reveal"><p class="kicker">03 / continue</p><h3>take it along.</h3><p>the work should continue across devices. a new screen shouldn’t mean starting over.</p></article>
+                <article class="reveal"><p class="kicker">04 / change</p><h3>make it different.</h3><p>inspect, adapt, export. good tools leave room for an idea their makers never had.</p></article>
+            </div>
+
+            <section class="milestone" aria-labelledby="milestone-title">
+                <div class="reveal"><p class="kicker">a small milestone / september 2026</p><div class="milestone-number">100k<span class="highlight">+</span></div></div>
+                <div><h2 id="milestone-title">downloads.<br>out in the world.</h2><p>our publisher portfolio has passed 100,000 lifetime downloads on crates.io. small libraries, shared foundations, and experiments that others can build on.</p><div class="readout reveal"><span>registry ........ crates.io</span><span>snapshot ........ 100,386 / 88 crates</span><span>recorded ........ 27 sep 2026</span></div><a class="source-link" href="https://crates.io/users/undivisible" target="_blank" rel="noreferrer">publisher portfolio ↗</a><p><small>publisher-account total, including maintained forks and projects outside TSCHK. downloads are not unique users.</small></p></div>
             </section>
 
             <section class="project-section" id="projects" aria-labelledby="projects-title">
@@ -728,79 +827,71 @@
                             <div class="project-detail"><div class="project-content"><p class="project-description">a systems ui toolkit built around a compact template language. shared interface definitions reach desktop, terminal, web, and embedded surfaces. a rust parser, view ir, and hot reload keep the work connected across targets.</p><div class="project-meta"><p class="project-stack">rust / ui toolkit / tschk</p><a class="project-link" href="https://crepuscularity.tsc.hk" target="_blank" rel="noreferrer">crepuscularity.tsc.hk ↗</a></div></div></div>
                         </details>
                     </li>
-                </ol>
-
-                <header class="section-heading">
-                    <p class="kicker">03 / earlier studies</p>
-                    <h2>ideas we keep coming back to.</h2>
-                </header>
-                <ol class="project-index">
                     <li class="project-item">
                         <details>
-                            <summary class="project-toggle"><span class="project-number">01</span><span class="project-name">atmosphere</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">an exploration of handoffs, clipboard and file sharing across devices without lock-in.</p><div class="project-meta"><p class="project-stack">swift / rust / beta</p><a class="project-link" href="https://github.com/atechnology-company/atmosphere" target="_blank" rel="noreferrer">github.com/atechnology-company/atmosphere ↗</a></div></div></div>
+                            <summary class="project-toggle"><span class="project-number">04</span><span class="project-name project-name--long">inauguration</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a compiler toolchain for bringing different languages into one shared intermediate representation. native compilation, jit execution, and a place for libraries from different ecosystems to meet.</p><div class="project-meta"><p class="project-stack">compiler / core ir / tschk</p><a class="project-link" href="https://inauguration.tsc.hk" target="_blank" rel="noreferrer">inauguration.tsc.hk ↗</a></div></div></div>
                         </details>
                     </li>
                     <li class="project-item">
                         <details>
-                            <summary class="project-toggle"><span class="project-number">02</span><span class="project-name">subspace</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">an editor and memory-workspace experiment, with threads toward mcp and voice capture.</p><div class="project-meta"><p class="project-stack">react native / supabase</p><a class="project-link" href="https://github.com/atechnology-company/subspace" target="_blank" rel="noreferrer">github.com/atechnology-company/subspace ↗</a></div></div></div>
+                            <summary class="project-toggle"><span class="project-number">05</span><span class="project-name">alpenglow</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">a minimal linux distribution exploring how little an operating system needs. musl, dinit, and oil packages form the foundation; desktop and graphical work remain experimental.</p><div class="project-meta"><p class="project-stack">linux / systems research / testing only</p><a class="project-link" href="https://alpenglow.tsc.hk" target="_blank" rel="noreferrer">alpenglow.tsc.hk ↗</a></div></div></div>
                         </details>
                     </li>
                     <li class="project-item">
                         <details>
-                            <summary class="project-toggle"><span class="project-number">03</span><span class="project-name">soliloquy</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">research toward a web- and ai-native operating system, touching zircon, vlang and rover.</p><div class="project-meta"><p class="project-stack">vlang / rust / c++ / svelte</p><a class="project-link" href="https://github.com/atechnology-company/soliloquy" target="_blank" rel="noreferrer">github.com/atechnology-company/soliloquy ↗</a></div></div></div>
+                            <summary class="project-toggle"><span class="project-number">06</span><span class="project-name">space</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">what if the compiler helped define the operating system? space explores components, capabilities and execution graphs, from the .in language through inauguration to a nanokernel.</p><div class="project-meta"><p class="project-stack">capability-native os / research / tschk</p><a class="project-link" href="https://space.tsc.hk" target="_blank" rel="noreferrer">space.tsc.hk ↗</a></div></div></div>
                         </details>
                     </li>
                     <li class="project-item">
                         <details>
-                            <summary class="project-toggle"><span class="project-number">04</span><span class="project-name">plates</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">a personal-assistant project exploring local-first storage, device continuity, and contextual interfaces. its history follows the same questions behind accompany: what should an assistant remember, where should that memory live, and who controls it?</p><div class="project-meta"><p class="project-stack">swift / rust / svelte</p><a class="project-link" href="https://github.com/atechnology-company/plates" target="_blank" rel="noreferrer">github.com/atechnology-company/plates ↗</a></div></div></div>
+                            <summary class="project-toggle"><span class="project-number">07</span><span class="project-name project-name--long">telekinesis</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">an ai coding agent built in rust, with a command line and terminal interface. rotary provides the agent loop, tools and sessions; crepuscularity provides the tui.</p><div class="project-meta"><p class="project-stack">agent / rust / tschk</p><a class="project-link" href="https://github.com/tschk/telekinesis" target="_blank" rel="noreferrer">explore telekinesis ↗</a></div></div></div>
                         </details>
                     </li>
                     <li class="project-item">
                         <details>
-                            <summary class="project-toggle"><span class="project-number">05</span><span class="project-name">rover</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">browser work around servo and rusty v8.</p><div class="project-meta"><p class="project-stack">rust / c++</p><a class="project-link" href="https://github.com/atechnology-company/rover" target="_blank" rel="noreferrer">github.com/atechnology-company/rover ↗</a></div></div></div>
-                        </details>
-                    </li>
-                    <li class="project-item">
-                        <details>
-                            <summary class="project-toggle"><span class="project-number">06</span><span class="project-name">graft</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">a sales and customer-communications product.</p><div class="project-meta"><p class="project-stack">svelte / zig / rust</p><a class="project-link" href="https://graftai.com.au" target="_blank" rel="noreferrer">graftai.com.au ↗</a></div></div></div>
-                        </details>
-                    </li>
-                    <li class="project-item">
-                        <details>
-                            <summary class="project-toggle"><span class="project-number">07</span><span class="project-name">pava</span><span class="project-status" aria-hidden="true"></span></summary>
-                            <div class="project-detail"><div class="project-content"><p class="project-description">a marketing-workflow experiment around ideation, scheduling and analytics.</p><div class="project-meta"><p class="project-stack">nextjs / supabase / rust / beta</p><a class="project-link" href="https://pava.studio" target="_blank" rel="noreferrer">pava.studio ↗</a></div></div></div>
+                            <summary class="project-toggle"><span class="project-number">08</span><span class="project-name project-name--long">equilibrium</span><span class="project-status" aria-hidden="true"></span></summary>
+                            <div class="project-detail"><div class="project-content"><p class="project-description">automatic c ffi generation for c-compiling languages. less glue between ecosystems, with related projects eqswift and eqts connecting rust to swift and javascript runtimes.</p><div class="project-meta"><p class="project-stack">language interop / in development / tschk</p><a class="project-link" href="https://github.com/tschk/equilibrium" target="_blank" rel="noreferrer">explore equilibrium ↗</a></div></div></div>
                         </details>
                     </li>
                 </ol>
+                <nav class="tool-index" aria-label="More TSCHK projects"><p class="kicker">more from the workshop</p><a href="https://github.com/tschk/eqswift">eqswift ↗</a><a href="https://github.com/tschk/eqts">eqts ↗</a><a href="https://github.com/tschk/rotary">rotary ↗</a><a href="https://github.com/tschk/zkr">zkr ↗</a><a href="https://github.com/tschk/praefectus">praefectus ↗</a><a href="https://github.com/tschk/rv8">rv8 ↗</a><a href="https://github.com/tschk/rig">rig ↗</a><a href="https://github.com/tschk">all tschk projects ↗</a></nav>
             </section>
 
-            <section class="timeline-section reveal" aria-labelledby="timeline-title">
+            <section class="timeline-section" id="history" aria-labelledby="timeline-title">
                 <header class="section-heading">
-                    <p class="kicker">04 / working record</p>
+                    <p class="kicker">03 / working record</p>
                     <h2 id="timeline-title">from continuity to companionship.</h2>
                 </header>
                 <ol class="timeline-list">
-                    <li class="timeline-item"><time class="timeline-date" datetime="2025-10-28">28 oct 2025</time><p class="timeline-entry">plates shows its first visible client and server development.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/43b20fe229ad50593317463b59e41515f283b657" target="_blank" rel="noreferrer">source ↗</a></span></li>
-                    <li class="timeline-item"><time class="timeline-date" datetime="2025-11-20">20 nov 2025</time><p class="timeline-entry">plates documents cupboard for local-first storage, tableware for coordination and a superassistant vision.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/16d76914d216687d0626129369b526321290a672" target="_blank" rel="noreferrer">source ↗</a></span></li>
-                    <li class="timeline-item"><time class="timeline-date" datetime="2025-12">dec 2025</time><p class="timeline-entry">arkie is described as a spatial, context-aware assistant hud, then as replacing a legacy assistant.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/aabae3eaa41bf75c8dff76806259f04394048410" target="_blank" rel="noreferrer">hud ↗</a><a class="source-link" href="https://github.com/atechnology-company/plates/commit/06eeb526b6d8a952ffd6334871c2b9c82e8bd9fa" target="_blank" rel="noreferrer">legacy ↗</a></span></li>
-                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-25">25 jul 2026</time><p class="timeline-entry">moonshine’s initial public commit appears in the tschk repository.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/moonshine/commit/32659f2389cfe3701950b05f7a9e8a05eae0ecc0" target="_blank" rel="noreferrer">source ↗</a></span></li>
-                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-31">31 jul 2026</time><p class="timeline-entry">crepuscularity records its wasm work in the tschk repository.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/crepuscularity/commit/50d659e94e23509349aa51199068e1860682398a" target="_blank" rel="noreferrer">source ↗</a></span></li>
-                    <li class="timeline-item"><time class="timeline-date" datetime="2026-09-27">27 sep 2026</time><p class="timeline-entry">the accompany public site enters the record.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/accompany/commit/47b5a06eec9243c34eeadc984f18e6be8df5c322" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-year" aria-label="2025">’25</li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-02-17">17 feb 2025</time><p class="timeline-entry"><strong>the idea was already there.</strong>the first version of this site introduces plates and vuno, a text editor. the intention: friendly, fun, natural technology. our public site history begins here.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/undivisible/atechnology.company/commit/8f48d2b796c4cc81898b8debc1bd49e6c2e3c3f5" target="_blank" rel="noreferrer">first site ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-03-19">19 mar 2025</time><p class="timeline-entry"><strong>a growing collection.</strong>the next site revision brings plates and akh into focus. the experiments reach beyond a single product.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/undivisible/atechnology.company/commit/d54ac964d8af1d2b03fd1a3fe093fbf320377f77" target="_blank" rel="noreferrer">revision ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-08-14">14 aug 2025</time><p class="timeline-entry"><strong>tools for everyday life.</strong>plates, infrastruct, standpoint, vuno and akh share the fourth site revision. editing, communities and computing become different ways to explore the same question: what would genuinely helpful software feel like?</p><span class="timeline-sources"><a class="source-link" href="https://github.com/undivisible/atechnology.company/commit/8a8d508abc714941979e734b043e5d80a860f5f2" target="_blank" rel="noreferrer">archive ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-10-28">28 oct 2025</time><p class="timeline-entry"><strong>plates, in practice.</strong>client and server development makes the continuity idea concrete: an assistant with context, rather than another isolated app.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/43b20fe229ad50593317463b59e41515f283b657" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-11-20">20 nov 2025</time><p class="timeline-entry"><strong>a home for your state.</strong>plates documents cupboard for local-first storage, tableware for coordination and a superassistant vision. memory should live somewhere you control.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/16d76914d216687d0626129369b526321290a672" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-11-25">25 nov 2025</time><p class="timeline-entry"><strong>below the application.</strong>soliloquy joins the site: a web-native operating-system exploration around zircon and servo. the questions now reach into the foundations beneath the interface.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/undivisible/atechnology.company/commit/0aa25945f0d557a5378f179b80be00434f2ff24e" target="_blank" rel="noreferrer">site history ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2025-12">dec 2025</time><p class="timeline-entry"><strong>context becomes an interface.</strong>arkie is described as a spatial, context-aware assistant hud, then as replacing a legacy assistant. another step toward help that follows the work.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/plates/commit/aabae3eaa41bf75c8dff76806259f04394048410" target="_blank" rel="noreferrer">hud ↗</a><a class="source-link" href="https://github.com/atechnology-company/plates/commit/06eeb526b6d8a952ffd6334871c2b9c82e8bd9fa" target="_blank" rel="noreferrer">legacy ↗</a></span></li>
+                    <li class="timeline-year" aria-label="2026">’26</li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-05-08">08 may 2026</time><p class="timeline-entry"><strong>inauguration begins.</strong>the first compiler and hot-reload loop establish a new line of work: shared foundations across language boundaries.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/inauguration/commit/85084e9f664a63bdcc61f25a8a9af35dc357fad1" target="_blank" rel="noreferrer">bootstrap ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-05-28">28 may 2026</time><p class="timeline-entry"><strong>space, from the compiler up.</strong>an operating-system design plan connects components, authority and a nanokernel. a research direction, not a finished operating system.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/space/commit/3113a5503a6e49f42af0aab94dccf2aec0072889" target="_blank" rel="noreferrer">design plan ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-06-14">14 jun 2026</time><p class="timeline-entry"><strong>alpenglow takes shape.</strong>a separate linux-distribution project explores a minimal system, with musl, dinit and oil. another path toward understanding and owning the whole stack.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/alpenglow/commit/13959f3cecb9738b5f199eb8b4ed710927ff8c62" target="_blank" rel="noreferrer">initial split ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-25">25 jul 2026</time><p class="timeline-entry"><strong>small pieces for the web.</strong>moonshine’s initial public commit introduces the bun-first framework. alongside crepuscularity, it becomes part of the foundation for accompany’s website.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/moonshine/commit/32659f2389cfe3701950b05f7a9e8a05eae0ecc0" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-07-31">31 jul 2026</time><p class="timeline-entry"><strong>interfaces across surfaces.</strong>crepuscularity records its wasm work. the toolkit connects shared interface definitions with different rendering targets, rather than treating every screen as a separate project.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/tschk/crepuscularity/commit/50d659e94e23509349aa51199068e1860682398a" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-09-27">27 sep 2026</time><p class="timeline-entry"><strong>tools become companions.</strong>accompany’s public site brings cissa and cupboard together: a companion to take with you, and a home for your digital life. the questions explored in plates remain central—context, continuity, ownership.</p><span class="timeline-sources"><a class="source-link" href="https://github.com/atechnology-company/accompany/commit/47b5a06eec9243c34eeadc984f18e6be8df5c322" target="_blank" rel="noreferrer">source ↗</a></span></li>
+                    <li class="timeline-item"><time class="timeline-date" datetime="2026-09-27">27 sep 2026</time><p class="timeline-entry"><strong>100,000 downloads, and counting.</strong>the publisher portfolio reaches 100,386 lifetime crate downloads across 88 crates. the work continues in public.</p><span class="timeline-sources"><a class="source-link" href="https://crates.io/users/undivisible" target="_blank" rel="noreferrer">crates.io ↗</a></span></li>
                 </ol>
-                <p class="timeline-note">dated from the development history. different projects, a recurring idea: useful technology should keep your context close and your data in your hands. cissa and cupboard hardware remain in development.</p>
+                <p class="timeline-note">selected milestones from public site and development history—not incorporation dates or a claim that every project shipped. cissa and cupboard hardware remain in development.</p>
             </section>
             </div>
 
         <section class="company-section" aria-labelledby="company-title">
             <div class="company-shell">
                 <header class="company-header">
-                    <p class="kicker">05 / company index</p>
+                    <p class="kicker">04 / company index</p>
                     <div>
                         <h2 id="company-title">the tools. the companions.</h2>
                         <p class="company-note">the software company of hong kong develops open foundations including moonshine and crepuscularity. accompany brings the work closer to everyday life through cissa and cupboard. explore the tools, or meet the companions.</p>
@@ -814,14 +905,18 @@
         </section>
 
             <div class="content-shell">
-            <section class="about-section" aria-labelledby="about-title">
+            <section class="about-section" id="about" aria-labelledby="about-title">
                 <header class="about-header">
-                    <p class="kicker">06 / about</p>
+                    <p class="kicker">05 / about</p>
                     <h2 id="about-title">atechnology company builds tools at the intersection of design and engineering. we want software to feel considered, quiet and useful.</h2>
                 </header>
 
                 <a class="email-link" href="mailto:imhere@atechnology.company">imhere@atechnology.company</a>
             </section>
+            <div class="footer-play">
+                <button type="button" class="gravity-toggle kicker" aria-pressed="false" hidden>let things fall ↘</button>
+                <p class="gravity-word" aria-label="things."><span aria-hidden="true">t</span><span aria-hidden="true">h</span><span aria-hidden="true">i</span><span aria-hidden="true">n</span><span aria-hidden="true">g</span><span aria-hidden="true">s</span><span aria-hidden="true">.</span></p>
+            </div>
             </div>
         </main>
 
@@ -853,6 +948,7 @@
 
                 setTheme(root.dataset.theme);
                 toggle.addEventListener("click", () => {
+                    root.classList.add("theme-ready");
                     setTheme(root.dataset.theme === "dark" ? "light" : "dark", true);
                 });
 
@@ -861,19 +957,45 @@
                     try {
                         if (localStorage.getItem(key)) return;
                     } catch (_) { return; }
+                    root.classList.add("theme-ready");
                     setTheme(matches ? "dark" : "light");
                 });
             })();
 
-            document.querySelectorAll(".project-item details").forEach((detail) => {
-                detail.addEventListener("toggle", () => {
-                    if (!detail.open) return;
-                    document.querySelectorAll(".project-item details[open]").forEach((other) => {
-                        if (other !== detail) other.open = false;
-                    });
+            const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+            const panels = [...document.querySelectorAll(".project-item details")].map((detail) => {
+                const summary = detail.querySelector("summary");
+                const content = detail.querySelector(".project-detail");
+                let expanded = detail.open;
+                let animation;
+                const setOpen = (open) => {
+                    const start = detail.getBoundingClientRect().height;
+                    animation?.cancel();
+                    expanded = open;
+                    if (reducedMotion.matches) {
+                        detail.open = open;
+                        detail.style.overflow = "";
+                        return;
+                    }
+                    detail.open = true;
+                    const end = summary.getBoundingClientRect().height + (open ? content.getBoundingClientRect().height : 0);
+                    detail.style.overflow = "hidden";
+                    animation = detail.animate({ height: [`${start}px`, `${end}px`] }, { duration: 420, easing: "cubic-bezier(.2,.8,.2,1)" });
+                    animation.onfinish = () => {
+                        detail.open = open;
+                        detail.style.overflow = "";
+                        animation = null;
+                    };
+                };
+                summary.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    if (!expanded) panels.forEach((panel) => { if (panel.detail !== detail && panel.isExpanded()) panel.setOpen(false); });
+                    setOpen(!expanded);
                 });
+                return { detail, setOpen, isExpanded: () => expanded };
             });
 
+            document.querySelectorAll(".timeline-item, .company-header, .company-row").forEach((element) => element.classList.add("reveal"));
             const reveals = document.querySelectorAll(".reveal");
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries) => {
@@ -884,9 +1006,63 @@
                     });
                 }, { threshold: 0.12 });
                 reveals.forEach((element) => observer.observe(element));
+                const landscape = document.querySelector(".landscape-study");
+                const ambientObserver = new IntersectionObserver(([entry]) => landscape.classList.toggle("is-active", entry.isIntersecting));
+                ambientObserver.observe(landscape);
             } else {
                 reveals.forEach((element) => element.classList.add("is-visible"));
             }
+
+            // Cupboard's word-fill idea, without a pinned screen or a perpetual render loop.
+            const manifesto = document.querySelector(".introduction");
+            const words = manifesto.textContent.trim().split(/\s+/).map((text) => {
+                const word = document.createElement("span");
+                word.className = "word";
+                word.textContent = text;
+                return word;
+            });
+            manifesto.replaceChildren(...words.flatMap((word) => [word, " "]));
+            let scrollFrame = 0;
+            const updateWords = () => {
+                scrollFrame = 0;
+                const rect = manifesto.getBoundingClientRect();
+                const progress = (innerHeight * .85 - rect.top) / (rect.height + innerHeight * .2);
+                words.forEach((word, index) => word.classList.toggle("is-read", reducedMotion.matches || progress >= index / words.length));
+            };
+            const queueWords = () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateWords); };
+            addEventListener("scroll", queueWords, { passive: true });
+            addEventListener("resize", queueWords);
+            updateWords();
+
+            // A finite gravity sketch: the letters fall, bounce, and can be gathered again.
+            const gravity = document.querySelector(".gravity-toggle");
+            const letters = [...document.querySelectorAll(".gravity-word span")];
+            gravity.hidden = false;
+            gravity.addEventListener("click", () => {
+                const falling = gravity.getAttribute("aria-pressed") !== "true";
+                gravity.setAttribute("aria-pressed", String(falling));
+                gravity.textContent = falling ? "put things together ↖" : "let things fall ↘";
+                letters.forEach((letter, index) => {
+                    const start = getComputedStyle(letter).transform;
+                    letter.getAnimations().forEach((animation) => animation.cancel());
+                    const drop = Math.max(0, letter.parentElement.clientHeight - letter.offsetHeight - 28);
+                    const angle = (index % 2 ? -1 : 1) * (7 + index * 2);
+                    const land = `translateY(${drop}px) rotate(${angle}deg)`;
+                    const frames = falling ? [
+                        { transform: start, offset: 0, easing: "cubic-bezier(.4,0,1,1)" },
+                        { transform: land, offset: .55, easing: "ease-out" },
+                        { transform: `translateY(${drop * .68}px) rotate(${angle * .7}deg)`, offset: .74, easing: "ease-in" },
+                        { transform: land, offset: 1 },
+                    ] : [{ transform: start }, { transform: "none" }];
+                    letter.animate(frames, { duration: reducedMotion.matches ? 0 : falling ? 1100 : 550, delay: reducedMotion.matches ? 0 : index * 45, fill: "both", easing: falling ? "linear" : "cubic-bezier(.2,.8,.2,1)" });
+                });
+            });
+            reducedMotion.addEventListener("change", () => {
+                updateWords();
+                if (reducedMotion.matches) document.getAnimations().forEach((animation) => {
+                    if (Number.isFinite(animation.effect.getTiming().iterations)) animation.finish();
+                });
+            });
         </script>
     </body>
 </html>
